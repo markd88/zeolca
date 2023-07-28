@@ -1,7 +1,7 @@
 {
   "name": "foot-print",
   "version": "0.1.0",
-  "homepage": "http://ssbti.net",
+  "homepage": "http://zeolca.com",
   "private": true,
   "dependencies": {
     "@ant-design/charts": "^1.4.2",
