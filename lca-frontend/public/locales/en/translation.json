@@ -1,0 +1,206 @@
+{ 
+  "duplicate_text": "Duplicate"  ,
+  "duplicate": "Duplicate"  ,
+  "publish": "Publish",
+  "publish_text": "Publish to private database",
+  "cannot_modify": "If you want to modify, please delete and create again.",
+  "unit_note": "*Unit: Please fill in the unit of the product quantity in this manufacturing period, for example: kg, ton, m3, ft2, unit, pair(s), piece(s), item(s), MJ, kWh, ….",
+  "forget_password":"Forget Password? Please contact:ali@nanozeo.com",  
+  "verify_info": "Please fill in your account information, we will send a verification letter to your email address, please enter your email and click the verification link.",
+  "send_link": "Send link",
+  "wrong_username_password": "Wrong username or password",
+  "no_email": "Not registered yet, Register your email now.",
+  "check_email": "Please check your email.",
+  "404": "Page not found",
+  "back_home": "Back to Home",
+  "username_required_message":"Username is required.",
+  "password_required_message":"Password is required.",
+  "comfirm_password": "Confirm password",
+  "term": "I have read and agree to the terms.",
+  "email": "Email",
+  "company": "Company",
+  "email_invalid": "Email format is incorrect.",
+  "password_mismatch": "The password and confirmation password do not match.",
+  "min_1":"At least 1 character",
+  "min_3":"At least 3 characters",
+  "min_6":"At least 6 characters",
+  "max_20":"Up to 20 characters",
+  "max_40":"Up to 40 characters",
+  "username":"Username",
+  "password":"Password",
+  "sign_in":"Sign in",
+  "sign_up": "Click here to sign up",
+  "verify_account": "Verify your email",
+
+  "home_page" : "Homepage",
+  "organization_footprint": "Organizational Carbon Footprint",
+  "water_footprint" : "Water Footprint",
+  "life_cycle": "Life cycle stage",
+  "impact_category": "Emission type",
+  "percent": "Percentage %",
+  "footprint_quantity": "Carbon emissions",
+  "footprint_result_by_process":"Analysis of carbon emissions by stage",
+  "footprint_result_by_category": "Analysis of carbon emissions by category",
+  "footprint_result": "Carbon footprint result",
+  "footprint": "Carbon footprint",
+  "product_footprint": "Product Carbon Footprint",
+  "under_construction": "Under construction",
+  "language": "Language",
+  "detail" : "Detail",
+  "delete_text": "Are you sure you want to delete it? This action cannot be undone. ",
+  "confirm" : "Confirm",
+  "cancel": "Cancel",
+  "create": "Create New",
+  "update": "Update",
+  "output": "OUTPUT",
+  "input": "INPUT",
+  "reset": "Reset",
+  "required": "Required",
+  "search": "Search",
+  "category": "Category",
+
+
+  "delete": "Delete",
+  "copy": "Copy",
+  "upload": "Upload",
+  "unit": "Unit",
+  "quantity": "Quantity",
+  "product_type": "Product type",
+  "product_name": "Product name",
+  "product_model": "Product model number",
+  "product_quantity_unit": "Product quantity/unit",
+  "product_unit_weight": "Product unit weight (kg)",
+  "product_life_cycle_scope" : "Product life cycle scope",
+  "product_cradle_to_gate": "From cradle to gate" ,
+  "product_cradle_to_grave": "From cradle to grave" ,
+  "product_stats_range": "Data period",
+  "product_create_time": "Created time",
+  "product_status": "Status",
+  "product_operation" : "Operation",
+  "product_action": "Action",
+
+
+
+  "type_manu": "Industry",
+  "type_livelihood": "Livelihood",
+  "type_waste": "Waste",
+  "type_energy": "Energy",
+  "type_transportation": "Transportation",
+  "type_carbon_removal": "Carbon removal",
+  "type_food": "Food",
+
+  "product_info": "Product Information",
+
+
+  "carbon_footprint_result":"Carbon footprint result",
+  "life_cycle_model": "Life cycle model",
+
+
+  "process_type": "Stage",
+  "process_name": "Process name",
+  "process_main_output": "Output",
+  "process_by_output": "By-product",
+  "process_product_name": "Name",
+  "process_product_percentage": "Proportion (%)",
+  "process_quantity": "Quantity",
+  "process_unit": "Unit",
+  "process_actual_quantity": "Actual quantity",
+
+  "process_material": "Raw material acquisition",
+  "process_manu": "Manufacturing/Processing",
+  "process_pack": "Packaging",
+  "process_sale": "Distribution",
+  "process_use": "Use",
+  "process_dispose": "Disposal (End-of-life)",
+
+  "process_material_short": "Raw",
+  "process_manu_short": "Manu",
+  "process_pack_short": "Pack",
+  "process_sale_short": "Dist",
+  "process_use_short": "Use",
+  "process_dispose_short": "End",
+
+
+
+  "add_new_byproduct": "Add new by-product",
+
+  "raw_material": "Raw material/material",
+  "consumables": "Consumables",
+  "energy": "Energy",
+  "resource": "Resource",
+  "transportation": "Transportation/commuting",
+  "recycled_material": "Recycled material",
+  "packing_material": "Packaging material",
+  "carbon_fixation": "Carbon fixation",
+
+  "academic_report":"Academic report/reference data",
+  "industry_stats":"Industrial data",
+  "field_measurement":"Field measurement data",
+  "theory_calculation":"Theoretical calculation",
+  "others":"Others",
+
+  "transportation_gross_weight": "Transportation gross weight",
+
+  "add_new_road": "Add new route",
+  "road": "Route",
+  "location_start": "Departure location",
+  "location_end": "Destination location",
+  "distance": "Distance(km)",
+  "transportation_tool": "Mode of transport",
+
+
+  "factor_name": "Carbon emission factor name",
+  "factor_unit": "Unit",
+  "factor_owner": "Owner",
+  "factor_location": "Applicable region",
+  "factor_time": "Raw data acquisition time",
+  "factor_detail": "Details",
+  "factor_note": "Description of carbon emission factor acquisition",
+
+
+  "factor_source": "Source of carbon emission factor",
+  "factor_db_basic" : "Carbon emission factor",
+  "add_factor": "Add a carbon emission factor",
+
+  "reality_data_production": "Reality data from production",
+  "industry_statistics": "Industry statistics",
+  "authority_investigative_report": "Investigative report from an authoritative organization",
+  "literature": "Literature review",
+
+
+  "create_new_product": "Create new product",
+  "modify_product": "Edit product",
+  "create_new_process": "Create new process",
+  "modify_process": "Modify process",
+  "create_new_input": "Create new input",
+  "modify_input": "Modify input",
+  "create_new_output": "Create new output",
+  "modify_output": "Modify output",
+
+
+
+  "basic_info" : "Basic information",
+  "trans_info": "Transportation information",
+
+  "input_process": "Process belongs to",
+  "input_type": "Type",
+  "input_name": "Name",
+  "input_data_source": "Data source",
+  "input_stat_note": "More description/note",
+  "manual": "Manually enter a carbon emission factor",
+
+
+
+  "if_trans" : "Transportation required or not",
+  "add_process": "Add Process",
+  "common": "common",
+  "all" : "all"
+  
+
+
+  
+
+
+    
+
+}
