@@ -126,7 +126,7 @@ exports.regUser =  async (req, res) => {
   const sql_1 = `insert into users (username, password, email, company, createTime, recentTime ,verify) values (?,?,?,?,?,?,?)`
   // const createTime = time.format('YYYY-MM-DD HH:mm:ss')
   const createTime = new Date().toISOString().slice(0, 19).replace('T', ' ');
-  const db_result = await db.query(sql_1, [userinfo.username, userinfo.password, userinfo.email, userinfo.company, createTime, createTime ,0 ])
+  const db_result = await db.query(sql_1, [userinfo.username, userinfo.password, userinfo.email, userinfo.company, createTime, createTime , 1 ])
   console.log(db_result)
   if (db_result.affectedRows != 1) {
     return res.send({ status: 1, message: '注册用户失败，请稍后再试！ this is a backend, database error' })
