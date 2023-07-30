@@ -1,4 +1,11 @@
 { 
+  "LCA": "LCA產品足跡",
+  "efootprint": "進階eFootprint建模",
+  "LCA-note": "LCA筆記",
+  "ESG": "ESG申報平台 - CDP",
+  "training": "培訓與顧問",
+  "factor_db": "排放因子查询",
+
   "duplicate_text": "复制" ,  
   "duplicate": "复制" ,   
   "publish": "发布",

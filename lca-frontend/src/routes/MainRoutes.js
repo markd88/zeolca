@@ -2,13 +2,16 @@
 // import { lazy } from "react"; 
 
 import MainLayout from '../layout/MainLayout';
-import ProjectOverview from "../pages/project-footprint/overview";
-import ProductDetail from "../pages/project-footprint/detail/index";
-import FactorDetail from '../pages/project-footprint/factor_detail';
+import ProductOverview from "../pages/product-footprint/overview";
+import ProductDetail from "../pages/product-footprint/detail/index";
+import FactorDetail from '../pages/product-footprint/factor_detail';
 import OrganizationOverview from "../pages/organization-carbon-footprint";
-import WaterOverview from '../pages/water_footprint';
-import Home from '../pages/home';
-import { Water } from '@mui/icons-material';
+import LCAnote from '../pages/LCA-note';
+import Factor_db from '../pages/factor_db';
+import Home from '../pages/home'
+import Efootprint from '../pages/efootprint'
+import ESG from '../pages/ESG'
+import Training from '../pages/training'
 
 
 const MainRoutes = 
@@ -23,9 +26,24 @@ const MainRoutes =
         element : <Home/>,
       },
       {
-        path: '/product-carbon-footprint',
+        path: '/factor_db',
         auth: true,
-        element: <ProjectOverview />,
+        element: <Factor_db />,
+      },
+      {
+        path: '/efootprint',
+        auth: true,
+        element: <Efootprint />,
+      },
+      {
+        path: '/training',
+        auth: true,
+        element: <Training />,
+      },
+      {
+        path: '/LCA',
+        auth: true,
+        element: <ProductOverview />,
       },
       {
         path: '/product-detail',
@@ -45,9 +63,14 @@ const MainRoutes =
       },
 
       {
-        path: '/water-footprint',
+        path: '/LCA-note',
         auth: true,
-        element: <WaterOverview />,
+        element: <LCAnote />,
+      },
+      {
+        path: '/ESG',
+        auth: true,
+        element: <ESG />,
       }
     ]
   }

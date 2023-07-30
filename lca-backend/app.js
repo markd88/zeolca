@@ -3,6 +3,7 @@ const cors = require('cors')
 const userRouter = require('./router/user')
 const productRouter = require('./router/product')
 const databaseRouter = require('./router/database')
+const gammaRouter = require('./router/gamma')
 const helmet = require('helmet')
 const joi = require('joi')
 
@@ -39,6 +40,7 @@ app.use(express.json())
 
 const expressJWT = require('express-jwt')
 
+app.use(express.static('images'));
 
 app.use(
   expressJWT(
@@ -54,7 +56,7 @@ app.use('/api', [userRouter, databaseRouter])
 
 
 
-app.use('/auth',productRouter)
+app.use('/auth', [productRouter, gammaRouter])
 
 
 // 错误中间件
@@ -87,3 +89,47 @@ app.listen(port, function(){
 })
 
 
+
+// const https = require("https");
+// const querystring = require("querystring");
+// const url = require("url");
+ 
+// const gamma_port = 10101;
+// // 1.创建代理服务
+// https.createServer(onRequest).listen(gamma_port, function(){
+//   console.log(`server running on port ${gamma_port}`)
+// });
+ 
+// function onRequest(req, res) {
+//   console.log(req, res)
+//   const originUrl = url.parse(req.url);
+//   const qs = querystring.parse(originUrl.query);
+//   const targetUrl = qs["target"];
+//   const target = url.parse(targetUrl);
+//   console.log(target)
+ 
+//   const options = {
+//     hostname: target.hostname,
+//     port: 80,
+//     path: url.format(target),
+//     method: "GET"
+//   };
+ 
+//   // 2.代发请求
+//   const proxy = https.request(options, _res => {
+//     // 3.修改响应头
+//     const fieldsToRemove = ["x-frame-options", "content-security-policy"];
+//     Object.keys(_res.headers).forEach(field => {
+//       if (!fieldsToRemove.includes(field.toLocaleLowerCase())) {
+//         res.setHeader(field, _res.headers[field]);
+//       }
+//     });
+//     _res.pipe(res, {
+//       end: true
+//     });
+//   });
+
+//   req.pipe(proxy, {
+//     end: true
+//   });
+// }

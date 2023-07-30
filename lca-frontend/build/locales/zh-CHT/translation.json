@@ -1,0 +1,213 @@
+{ 
+  "LCA": "LCA產品足跡",
+  "efootprint": "進階eFootprint建模",
+  "LCA-note": "LCA筆記",
+  "ESG": "ESG申報平台 - CDP",
+  "training": "培訓與顧問",
+  "factor_db": "排放因子查询",
+
+  "duplicate_text": "复制" ,  
+  "duplicate": "复制" ,   
+  "publish": "发布",
+  "publish_text": "发布至私有数据库",
+  "cannot_modify": "如需修改，請刪除重填。",  
+  "unit_note": "*單位: 請填寫該資料時間段產品數量統計單位，例如: kg, ton, m3, ft2, unit, pair(s), piece(s), item(s), MJ, kWh, …。",
+  "forget_password":"忘記密碼？請聯繫：ali@nanozeo.com",
+  "verify_info": "請填寫您的帳戶資訊，我們會給您的電子郵件地址發送驗證信，請進入Email點擊驗證連結",
+  "send_link": "發送連結",
+  "wrong_username_password": "用戶名或密碼錯誤",
+  "no_email": "Email尚未註冊，請先註冊",
+  "check_email": "請檢查您的Email",
+  "404": "您所訪問的頁面不存在",
+  "back_home": "返回主頁",
+  "username_required_message":"用戶名稱必填",
+  "password_required_message":"密碼必填",
+  "comfirm_password": "確認密碼",
+  "term": "我已讀且同意條款",
+  "email": "郵箱",
+  "company": "公司",
+  "email_invalid": "Email格式不正確",
+  "password_mismatch": "密碼與上次不符",
+  "min_1":"至少1字元",
+  "min_3":"至少3字元",
+  "min_6":"至少6字元",
+  "max_20":"至多20字元",
+  "max_40":"至多40字元",
+  "username":"用戶名稱",
+  "password":"密碼",
+  "sign_in":"登錄",
+  "sign_up": "點擊這裡註冊",
+  "verify_account": "驗證您的Email",
+
+  "home_page" : "首頁",
+  "organization_footprint": "組織碳足跡",
+  "water_footprint" : "水足跡",
+  "life_cycle": "生命週期階段",
+  "impact_category": "排放類型",
+  "percent": "百分比 %",
+  "footprint_quantity": "碳排放量",
+  "footprint_result_by_process":"碳足跡排放階段分析",
+  "footprint_result_by_category": "碳足跡排放類型分析",
+  "footprint_result": "碳足跡結果",
+  "footprint": "碳足跡",
+  "product_footprint": "產品碳足跡",
+  "under_construction": "建設中",
+  "language": "語言",
+  "detail" : "詳情",
+  "delete_text": "確定刪除嗎？ 此動作不可復原哦 ",
+  "confirm" : "確定",
+  "cancel": "取消",
+  "create": "新建",
+  "update": "修改",
+  "output": "輸出",
+  "input": "輸入",
+  "reset": "重設",
+  "required": "必填",
+  "search": "搜尋",
+  "category": "類型",
+
+
+  "delete": "刪除",
+  "copy": "複製",
+  "upload": "上傳",
+  "unit": "單位",
+  "quantity": "數量",
+  "product_type": "產品類型",
+  "product_name": "產品名稱",
+  "product_model": "型號",
+  "product_quantity_unit": "數量/單位",
+  "product_unit_weight": "單位產品重量(kg)",
+  "product_life_cycle_scope" : "生命週期邊界",
+  "product_cradle_to_gate": "從搖籃到大門" ,
+  "product_cradle_to_grave": "從搖籃到墳墓" ,
+  "product_stats_range": "資料統計時段",
+  "product_create_time": "創建時間",
+  "product_status": "狀態",
+  "product_operation" : "操作",
+  "product_action": "操作",
+
+
+
+  "type_manu": "工業",
+  "type_livelihood": "生活",
+  "type_waste": "廢棄物",
+  "type_energy": "能源",
+  "type_transportation": "交通",
+  "type_carbon_removal": "碳移除",
+  "type_food": "食品",
+
+  "product_info": "產品資訊",
+
+
+  "carbon_footprint_result":"碳足跡結果",
+  "life_cycle_model": "生命週期建模",
+
+
+  "process_type": "所屬環節",
+  "process_name": "工序名稱",
+  "process_main_output": "產出物",
+  "process_by_output": "副產出物",
+  "process_product_name": "名稱",
+  "process_product_percentage": "占比 (%)",
+  "process_quantity": "數量",
+  "process_unit": "單位",
+  "process_actual_quantity": "實際用量",
+
+  "process_material": "原料獲取",
+  "process_manu": "生產",
+  "process_pack": "包裝",
+  "process_sale": "分銷",
+  "process_use": "使用",
+  "process_dispose": "廢棄（使用結束）",
+
+  "process_material_short": "原料獲取",
+  "process_manu_short": "生產",
+  "process_pack_short": "包裝",
+  "process_sale_short": "分銷",
+  "process_use_short": "使用",
+  "process_dispose_short": "廢棄（使用結束）",
+
+
+
+  "add_new_byproduct": "添加新副產出物",
+
+  "raw_material": "原材料/物料",
+  "consumables": "耗材",
+  "energy": "能源",
+  "resource": "資源",
+  "transportation": "運輸/通勤",
+  "recycled_material": "再生原料",
+  "packing_material": "包裝材料",
+  "carbon_fixation": "固碳",
+
+  "academic_report":"文獻報告",
+  "industry_stats":"行業數據",
+  "field_measurement":"實測數據",
+  "theory_calculation":"理論計算",
+  "others":"其他",
+
+  "transportation_gross_weight": "運輸毛重",
+
+  "add_new_road": "新增路段",
+  "road": "路段",
+  "location_start": "始發地",
+  "location_end": "目的地",
+  "distance": "距離(km)",
+  "transportation_tool": "交通工具",
+
+
+  "factor_name": "因子名稱",
+  "factor_unit": "單位",
+  "factor_owner": "所有者",
+  "factor_location": "適用地區",
+  "factor_time": "原始資料採集時間",
+  "factor_detail": "詳情",
+  "factor_note": "碳排放因子取值說明",
+
+
+  "factor_source": "碳排放因子來源",
+  "factor_db_basic" : "碳排因子",
+  "add_factor": "添加碳排放因子",
+
+  "reality_data_production": "生產實景數據",
+  "industry_statistics": "行業統計數據",
+  "authority_investigative_report": "權威機構調研報告",
+  "literature": "文獻",
+
+
+  "create_new_product": "新建產品",
+  "modify_product": "編輯產品",
+  "create_new_process": "新建工序",
+  "modify_process": "修改工序",
+  "create_new_input": "新建輸入",
+  "modify_input": "修改輸入",
+  "create_new_output": "新建輸出",
+  "modify_output": "修改輸出",
+
+
+
+  "basic_info" : "基礎訊息",
+  "trans_info": "運輸訊息",
+
+  "input_process": "所屬工序",
+  "input_type": "類型",
+  "input_name": "名稱",
+  "input_data_source": "數據來源",
+  "input_stat_note": "數據說明",
+  "manual": "手動輸入",
+
+
+
+  "if_trans" : "是否需要運輸",
+  "add_process": "添加工序",
+  "common": "常用",
+  "all" : "全部"
+  
+
+
+  
+
+
+    
+
+}

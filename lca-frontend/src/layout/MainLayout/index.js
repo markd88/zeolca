@@ -48,6 +48,28 @@ const App = () => {
         label: t("product_footprint"),
         key: 'product-carbon-footprint',
         icon: <BarsOutlined />,
+        children: [
+          {        
+            label: t("factor_db"),
+            key: 'factor_db',
+            icon: <BarsOutlined />,
+            },
+          {        
+          label: t("LCA"),
+          key: 'LCA',
+          icon: <BarsOutlined />,
+          },
+          {
+            label: t("efootprint"),
+            key: 'efootprint',
+            icon: <BarsOutlined />,
+          }
+        ]
+      },
+      {
+        label: t("LCA-note"),
+        key: 'LCA-note',
+        icon: <BarsOutlined />,
       },
       {
         label: t("organization_footprint"),
@@ -55,10 +77,15 @@ const App = () => {
         icon: <BarsOutlined />,
       },  
       {
-        label: t("water_footprint"),
-        key: 'water-footprint',
+        label: t("ESG"),
+        key: 'ESG',
         icon: <BarsOutlined />,
-      },
+      },  
+      {
+        label: t("training"),
+        key: 'training',
+        icon: <BarsOutlined />,
+      },  
       {
         label: t("sign_in"),
         key: 'login',

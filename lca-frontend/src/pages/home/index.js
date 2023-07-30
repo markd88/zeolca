@@ -1,226 +1,36 @@
-import React, { useEffect, useState } from 'react';
-import { Outlet, useNavigate } from 'react-router-dom';
-import { SearchOutlined } from '@ant-design/icons';
-import { Input, Select, Button, Card, Col, Row, Space, Collapse} from 'antd';
-import { useTranslation } from "react-i18next";
-import axios from 'axios';
+import { Divider, Typography } from 'antd';
+import React from 'react';
+const { Title, Paragraph, Text, Link } = Typography;
 
-import global_config from "../../global";
+const App = () => (
+  <Typography>
+    <Title>永續發展</Title>
+    <Divider />
+    <Paragraph>
+    以【科學技術】整合《永續發展》策略工具 ：
+    </Paragraph>
 
-const { Panel } = Collapse;
+    <Paragraph>
+    LCA建模方法與標準數據庫 
+    </Paragraph>
 
-const App = () => {
-  const navigate = useNavigate()
+    <Paragraph>
+    生命週期評估（LCA）使用科學方法步驟，來系統性的評估產品或服務對環境造成的衝擊；成功的關鍵在於使用有效的專業工具。
+    </Paragraph>
 
-  const onChange = (key) => {
-    // console.log(key);
-  };
+    <Paragraph>
+    ZeoLCA.com 基於亞洲製造業最完整的幾個LCA數據庫來源，提供數據庫查詢的管道，並整合各種組織盤查、申報、LCA方法培訓等資料，
+    提供供應鏈廠商及相關諮詢機構一些操作方法學參考及顧問服務。
+    </Paragraph>
 
-  const [data, setData] = useState([]);
-  const [loading, setLoading] = useState()
-
-  let factor_database = "all"
-  let factor_name = null
-  
-  // console.log("data", data)
-  let level_one = data.map((data) => {
-    return data[ '1级分类\n（Level 1）']
-  })
-
-  level_one = [...new Set(level_one)]
-
-
-  let level_two = data.map((data) => {
-    return data['2级分类\n（Level 2）']
-  })
-
-  level_two = new Set(level_two)
+    <Paragraph>
+    ZeoLCA.com由台灣磁原科技股份有限公司（Nanozeo Inc）研發製作，主要配合1.5度科學減碳協會的科學永續方法學研究團隊
+    （成員來自台大、清大、四川大學、史丹佛大學等研究生及教授群體），提供各種國際供應鏈的最新永續發展趨勢及產業要求，
+    並獲得母公司曦爵集團（CDP Supplier Engagment Leader Award 2022/碳申報計畫平台供應鏈領導獎章）提供產業數據庫及平台支持，
+    專注於國際供應鏈的碳足跡、碳申報、ESG、碳權、碳稅等科學工具的開發，與相關培訓與顧問服務。
+    </Paragraph>
 
 
-// console.log(level_one, level_two)
-
-  let one_to_two = new Map()
-
-  for (let i = 0; i < level_one.length; i++ ) {
-    let target = data.map((value) => {
-      if (value['1级分类\n（Level 1）'] == level_one[i] && level_two.has(value['2级分类\n（Level 2）'])) {
-        level_two.delete(value['2级分类\n（Level 2）'])
-        return [value['2级分类\n（Level 2）'], value.id]
-      }
-    }).filter((value) => {
-      return value
-    })
-
-    one_to_two.set(level_one[i], target)
-  }
-
-
-  let level_one_two = data.map((data) => {
-    return data['1级分类\n（Level 1）'] + "##" + data['2级分类\n（Level 2）']
-  })
-
-  level_one_two = [...new Set(level_one_two)]
-
-  let onetwo_to_data = new Map()
-
-  for (let i = 0; i < level_one_two.length; i++ ) {
-    let target = data.map((value) => {
-      if (value['1级分类\n（Level 1）'] + "##" + value[ '2级分类\n（Level 2）'] == level_one_two[i]) {
-        return value
-      }
-    }).filter((value) => {
-      return value
-    })
-    onetwo_to_data.set(level_one_two[i], target)
-  }
-
-  // console.log(one_to_two, "one_to two")
-  // console.log(onetwo_to_data, 'one two data')
-
-  const fetchData = () => {
-    setLoading(true);
-    // console.log('here')
-    axios.post(global_config.root_url+'/api/getfactor_db', 
-        {factor_database:factor_database, factor_name: factor_name})
-        .then((response) => {
-          // console.log(response)
-          // login success
-          if (response.data.status === 0) {
-            const processed = response.data.data
-            setData(processed)
-            // console.log(processed)
-            setLoading(false)
-
-          } 
-          // login fail
-          else {
-            alert("error: please contact ssbti for support")
-          }
-  
-        })
-        .catch((error) => {
-          if (error.response) {
-            // console.log(error.response)
-          } else if (error.request) {
-            // console.log('network error')
-          } else {
-            // console.log(error)
-          }
-        })
-
-      }
-
-  useEffect(() => {
-
-    fetchData()
-
-  }, [])
-
-  const options = [
-    {
-      value: 'all',
-      label: 'all',
-    },
-    {
-      value: 'CPCD',
-      label: 'CPCD',
-    },
-    {
-      value: 'IPCC',
-      label: 'IPCC',
-    },
-  ];
-
-  const inputChange = (value) => {
-    
-    factor_name =value.target.value
-    // console.log(factor_name)
-  }
-
-  const handleChange = (value) => {
-    factor_database = value
-    // console.log(factor_database)
-  };
-
-
-  const searchDataBase = () => {
-    // console.log('search', factor_database, factor_name)
-  }
-
-
-
-  return (
-
-      <div className="site-card-wrapper">
-
-        {/* <Space>
-            <Button type='text'> 数据库:</Button>
-
-            <Select
-              label={"数据库"}
-              defaultValue="all"
-              onChange={handleChange}
-              options={options}
-              style={{
-                width:100
-              }}
-            > 
-            </Select>
-
-            <Button type='text'> 名称: </Button>
-            <Input  placeholder="factor name" onChange={inputChange}/>
-
-            <Button type="primary" shape="circle" onClick={searchDataBase} icon={<SearchOutlined />} />
-
-        </Space> */}
-
-        <Row gutter={16}>
-
-          {level_one.map((level_name_one) => {
-            return (
-              <Col span={8}>
-                <Card title={level_name_one} bordered={false}  loading={loading} 
-                style={{
-                      marginTop: 20,
-                      height: 300,
-                      overflow: "auto"
-                      }}>
-                  <Collapse onChange={onChange}>
-                    {one_to_two.get(level_name_one).map((level_name_two) => {
-                      return (
-                        <Panel header={level_name_two[0]} key={level_name_two[1]}>
-                          <Space
-                              direction="vertical"
-                              size="small"
-                            >
-                          {
-                            onetwo_to_data.get(level_name_one + "##" + level_name_two[0]).map((data) => {
-                              return (
-
-                                <Button type="link" href={`/factor-detail/${data.id} `} target={'_blank'} >{data['3级分类\n（Level 3）']}</Button>
-                              )
-                            })
-                          }
-                        </Space>
-                        </Panel>
-                      )
-
-                    })
-                    }
-
-                  </Collapse>
-                </Card>
-              </Col>
-            )
-          })}
-
-
-        </Row>
-      </div>
-
-  )
-
-
-}
-
+  </Typography>
+);
 export default App;
