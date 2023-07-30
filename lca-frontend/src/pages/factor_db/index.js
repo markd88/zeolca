@@ -216,6 +216,9 @@ const App = () => {
 
 
         </Row>
+        <Row>
+          {"*The database was based on CPCD （China Product Carbon footprint Database）, and supplemented by SSBTi.org / SSBTi.net. All rights reserved"}
+        </Row>
       </div>
 
   )
