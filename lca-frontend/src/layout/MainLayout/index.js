@@ -211,7 +211,7 @@ const App = () => {
               textAlign: 'center',
             }}
           >
-            ssbti.org - LCA data center ©2023
+            ZeoLCA.com - LCA Tools, Training & Database Center
             </Footer>
           </Layout>
         </Layout>

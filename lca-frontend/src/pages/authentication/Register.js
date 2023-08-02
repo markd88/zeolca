@@ -117,7 +117,7 @@ const App = () => {
       // console.log(response)
       // register success
       if (response.data.status == 0) {
-        alert(`register success! you will be navigated to log in, and please check your email to verify your account first`)
+        alert(`注册成功，请等待ssbti管理员批准。`)
         navigate('/login', {
           replace: false
         })

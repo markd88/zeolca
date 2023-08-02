@@ -4,6 +4,7 @@ const userRouter = require('./router/user')
 const productRouter = require('./router/product')
 const databaseRouter = require('./router/database')
 const gammaRouter = require('./router/gamma')
+const adminRouter = require('./router/admin')
 const helmet = require('helmet')
 const joi = require('joi')
 
@@ -40,7 +41,8 @@ app.use(express.json())
 
 const expressJWT = require('express-jwt')
 
-app.use(express.static('images'));
+// app.use(express.static('images'));
+
 
 app.use(
   expressJWT(
@@ -50,13 +52,12 @@ app.use(
           }).unless({ path: [/^\/api\//] }))
 
 
-
 // "/api" does not need Authoriation
-app.use('/api', [userRouter, databaseRouter])
+app.use('/api', [userRouter])
 
 
 
-app.use('/auth', [productRouter, gammaRouter])
+app.use('/auth', [productRouter, gammaRouter,  databaseRouter, adminRouter])
 
 
 // 错误中间件
@@ -75,6 +76,7 @@ app.use(function (err, req, res, next) {
   
   // 未知错误
   res.send({status: 1, message: err})
+  console.log(err)
   console.log('unknow error in app.js')
 })
 

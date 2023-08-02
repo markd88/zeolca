@@ -38,6 +38,10 @@
   "sign_in":"Sign in",
   "sign_up": "Click here to sign up",
   "verify_account": "Verify your email",
+  "user_operation": "Operation",
+  "removeAccess": "Remove Access",
+  "approveAccess": "Approve",
+  "verify": "status",
 
   "home_page" : "Homepage",
   "organization_footprint": "Organizational Carbon Footprint",

@@ -38,6 +38,11 @@
   "sign_in":"登录",
   "sign_up": "点击这里注册",
   "verify_account": "验证您的邮箱",
+  "user_operation": "用户管理",
+  "removeAccess": "关闭权限",
+  "approveAccess": "打开权限",
+  "verify": "用户状态",
+
 
   "home_page" : "首页",
   "organization_footprint": "组织碳足迹",

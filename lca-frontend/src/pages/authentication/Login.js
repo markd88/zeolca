@@ -82,11 +82,11 @@ function Copyright(props) {
     resolver: yupResolver(validationSchema)
   });
 
-  const handleVerify = () => {
-    navigate('/email-verification',{
-      replace: false,
-    })
-  }
+  // const handleVerify = () => {
+  //   navigate('/email-verification',{
+  //     replace: false,
+  //   })
+  // }
 
   // const handleRecovery = () => {
   //   navigate('/password-recovery',{
@@ -114,7 +114,6 @@ function Copyright(props) {
       else if (response.data.status === 1) {
         alert(response.data.message)
       }
-
 
       else {
         alert("error: please contact ssbti for support")
@@ -212,14 +211,14 @@ function Copyright(props) {
                 {t("sign_in")}
               </Button>
 
-              <Button
+              {/* <Button
                 onClick={handleVerify}
                 fullWidth
                 variant="outlined"
                 sx={{ mt: 3, mb: 2 }}
               >
                 {t('verify_account')}
-              </Button>
+              </Button> */}
 
               {/* <Button
                 onClick={handleRecovery}

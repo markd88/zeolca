@@ -6,17 +6,17 @@ const nodemailer = require('nodemailer');
 
 
 
-let transporter = nodemailer.createTransport({
-  // host: 'smtp.qq.email',
-  //service: 'Godaddy',
-  host:'ssbti.net',
-  //secureConnection: true,  //安全方式发送,建议都加上
-  port:465,
-  auth: {
-      user: 'info@ssbti.net',
-      pass: "a0035741018"
-  }
-})
+// let transporter = nodemailer.createTransport({
+//   // host: 'smtp.qq.email',
+//   //service: 'Godaddy',
+//   host:'ssbti.net',
+//   //secureConnection: true,  //安全方式发送,建议都加上
+//   port:465,
+//   auth: {
+//       user: 'info@ssbti.net',
+//       pass: "a0035741018"
+//   }
+// })
 
 // exports.regUser =  async (req, res) => {
 //   try {
@@ -96,6 +96,115 @@ let transporter = nodemailer.createTransport({
 // }
 
 
+
+
+
+
+// exports.reVerify =  async (req, res) => {
+//   try {
+//     const userinfo = req.body
+//     console.log(userinfo)
+//     // check the uniqueness of email
+//     const sql =  `select * from users where email=?`
+//     const check_res = await db.query(sql, userinfo.email)
+//     console.log(check_res)
+//     if (check_res.length != 1) {
+//       return res.send({status: 3, message: `There is no account associated with this email, please sign up`})
+//     }
+//     const target = check_res[0]
+//     if (target.username !== userinfo.username || target.password !== userinfo.password) {
+//       return res.send({status: 4, message: `username or password wrong`})
+//     }
+
+//     const user = {
+//       'username': userinfo.username, 
+//       'company': userinfo.company,
+//       "email": userinfo.email,
+//     }
+
+//     const tokenStr = jwt.sign(user, config.env.jwtSecretKey, {
+//       expiresIn: '10m', // token 有效期为 10 min
+//     })
+
+//     const mailConfigurations = {
+  
+//       // It should be a string of sender/server email
+//       from: 'info@ssbti.net',
+    
+//       to: userinfo.email,
+    
+//       // Subject of Email
+//       subject: '[Action required] Email Verification 邮箱验证',
+        
+//       // This would be the text of email body
+//       text: `Hi! ${userinfo.username}, You have recently visited 
+//              our website and entered your email.
+//              Please follow the given link to verify your email
+//              http://lca.ssbti.org/api/verify/${tokenStr} 
+//              Thanks
+//              This link will expire in 10 mins. If it expires, please re-verify`
+        
+//   };
+
+
+//   transporter.sendMail(mailConfigurations, function(error, info){
+//     if (error) {
+//       console.log(error);
+//       return res.send({status: 1, message: 'email send fail'})
+//     }
+    
+//     else {
+//       console.log('Email Sent Successfully');
+//       console.log(info);
+//       return res.send({status: 0, message: 'verification code success'})
+//     }
+
+//   });
+
+
+
+//   } catch (err) {
+//     return res.send({
+//       status: 1,
+//       message: err.message,
+//     })
+//   }
+// }
+
+
+
+// exports.recovery = async (req, res) => {
+//   try{
+//     const userinfo = req.body
+//     email
+
+//   } catch (err) {
+//     return res.send({status: 1, message: err.message})
+//   }
+// }
+
+// exports.verify = async (req, res) => {
+//   const {token} = req.params;
+
+//   jwt.verify(token, config.env.jwtSecretKey, async function(err, decoded) {
+//     if (err) {
+//         console.log(err);
+//         return res.send(`Email verification failed, possibly the link is invalid or expired`);
+//     }
+//     else {
+//         console.log(decoded)
+//         const sql = `update users set verify=? where email=?`
+//         const db_res = await db.query(sql, [1, decoded.email])
+//         console.log(db_res)
+//         return res.send({status: 0, message: "Email verifified successfully, Please go and log in" });
+//     }
+// });
+
+
+
+// }
+
+
 exports.regUser =  async (req, res) => {
   try {
     const userinfo = req.body
@@ -126,16 +235,14 @@ exports.regUser =  async (req, res) => {
   const sql_1 = `insert into users (username, password, email, company, createTime, recentTime ,verify) values (?,?,?,?,?,?,?)`
   // const createTime = time.format('YYYY-MM-DD HH:mm:ss')
   const createTime = new Date().toISOString().slice(0, 19).replace('T', ' ');
-  const db_result = await db.query(sql_1, [userinfo.username, userinfo.password, userinfo.email, userinfo.company, createTime, createTime , 1 ])
+  const db_result = await db.query(sql_1, [userinfo.username, userinfo.password, userinfo.email, userinfo.company, createTime, createTime , 0 ])
   console.log(db_result)
   if (db_result.affectedRows != 1) {
     return res.send({ status: 1, message: '注册用户失败，请稍后再试！ this is a backend, database error' })
   }
   console.log('Email Sent Successfully');
-  console.log(info);
-  return res.send({status: 0, message: 'register success, please verify'})
 
-
+  return res.send({status: 0, message: 'register success, please wait ssbti to approve'})
 
   } catch (err) {
     return res.send({
@@ -145,113 +252,6 @@ exports.regUser =  async (req, res) => {
   }
 }
 
-
-exports.reVerify =  async (req, res) => {
-  try {
-    const userinfo = req.body
-    console.log(userinfo)
-    // check the uniqueness of email
-    const sql =  `select * from users where email=?`
-    const check_res = await db.query(sql, userinfo.email)
-    console.log(check_res)
-    if (check_res.length != 1) {
-      return res.send({status: 3, message: `There is no account associated with this email, please sign up`})
-    }
-    const target = check_res[0]
-    if (target.username !== userinfo.username || target.password !== userinfo.password) {
-      return res.send({status: 4, message: `username or password wrong`})
-    }
-
-    const user = {
-      'username': userinfo.username, 
-      'company': userinfo.company,
-      "email": userinfo.email,
-    }
-
-    const tokenStr = jwt.sign(user, config.env.jwtSecretKey, {
-      expiresIn: '10m', // token 有效期为 10 min
-    })
-
-    const mailConfigurations = {
-  
-      // It should be a string of sender/server email
-      from: 'info@ssbti.net',
-    
-      to: userinfo.email,
-    
-      // Subject of Email
-      subject: '[Action required] Email Verification 邮箱验证',
-        
-      // This would be the text of email body
-      text: `Hi! ${userinfo.username}, You have recently visited 
-             our website and entered your email.
-             Please follow the given link to verify your email
-             http://lca.ssbti.org/api/verify/${tokenStr} 
-             Thanks
-             This link will expire in 10 mins. If it expires, please re-verify`
-        
-  };
-
-
-  transporter.sendMail(mailConfigurations, function(error, info){
-    if (error) {
-      console.log(error);
-      return res.send({status: 1, message: 'email send fail'})
-    }
-    
-    else {
-      console.log('Email Sent Successfully');
-      console.log(info);
-      return res.send({status: 0, message: 'verification code success'})
-    }
-
-  });
-
-
-
-  } catch (err) {
-    return res.send({
-      status: 1,
-      message: err.message,
-    })
-  }
-}
-
-
-
-// exports.recovery = async (req, res) => {
-//   try{
-//     const userinfo = req.body
-//     email
-
-//   } catch (err) {
-//     return res.send({status: 1, message: err.message})
-//   }
-// }
-
-exports.verify = async (req, res) => {
-  const {token} = req.params;
-
-  jwt.verify(token, config.env.jwtSecretKey, async function(err, decoded) {
-    if (err) {
-        console.log(err);
-        return res.send(`Email verification failed, possibly the link is invalid or expired`);
-    }
-    else {
-        console.log(decoded)
-        const sql = `update users set verify=? where email=?`
-        const db_res = await db.query(sql, [1, decoded.email])
-        console.log(db_res)
-        return res.send({status: 0, message: "Email verifified successfully, Please go and log in" });
-    }
-});
-
-
-
-}
-
-
-  
 
 
 
@@ -266,7 +266,7 @@ exports.login = async (req, res) => {
     }
     if (Number(login_results[0].verify) !== 1) {
       console.log(login_results);
-      return res.send({status: 1, message: 'Please verify your account first'})
+      return res.send({status: 1, message: '请等待ssbti管理员审核账户'})
     }
     const login_res = login_results[0]
     const user = {
@@ -281,7 +281,7 @@ exports.login = async (req, res) => {
     const login_time_update = `update users set recentTime = ? where username=?`
     const recentTime = new Date().toISOString().slice(0, 19).replace('T', ' ');
     const recentTime_results = await db.query(login_time_update, [recentTime, userinfo.username])
-    console.log(recentTime_results.affectedRows)
+    // console.log(recentTime_results.affectedRows)
     if (recentTime_results.affectedRows !== 1) return res.send({status: 1, message: '后端数据库操作失败！'})
     return res.send({
           status: 0,

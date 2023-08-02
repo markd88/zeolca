@@ -796,7 +796,7 @@ exports.updateProcess = async (req, res) => {
     const process_info = req.body
     const userid = req.auth.id
     const process_id = process_info.id
-    // console.log(process_info, userid, process_id)
+
     const sql = `delete from process  WHERE id=?`
     const db_res = await db.query(sql, [process_id])
 

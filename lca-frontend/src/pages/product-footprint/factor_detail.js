@@ -19,10 +19,13 @@ const App = () => {
   const [loading, setLoading] = useState(true);
 
   const fetchData = () => {
-    setLoading(true);
+    setLoading(true);   
+    let token = JSON.parse(localStorage.getItem('token'));
 
-    axios.post(global_config.root_url +'/api/getfactor_db_fid', 
-        {factor_id: index})
+    axios.post(global_config.root_url +'/auth/getfactor_db_fid', 
+        {factor_id: index}, {
+          headers: {
+          "Authorization" : `Bearer ${token}`} } )
         .then((response) => {
           // console.log(response)
           // login success

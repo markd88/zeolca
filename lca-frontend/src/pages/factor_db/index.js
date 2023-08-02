@@ -79,9 +79,12 @@ const App = () => {
 
   const fetchData = () => {
     setLoading(true);
+    let token = JSON.parse(localStorage.getItem('token'));
     // console.log('here')
-    axios.post(global_config.root_url+'/api/getfactor_db', 
-        {factor_database:factor_database, factor_name: factor_name})
+    axios.post(global_config.root_url+'/auth/getfactor_db', 
+        {factor_database:factor_database, factor_name: factor_name}, 
+        {headers: {
+          "Authorization" : `Bearer ${token}`} } )
         .then((response) => {
           // console.log(response)
           // login success
@@ -91,7 +94,12 @@ const App = () => {
             // console.log(processed)
             setLoading(false)
 
-          } 
+          }  else if (response.data.status === 2) {
+            // status:2 means jwt error or expire
+            navigate("/login", {
+              replace: true,
+            })
+        }
           // login fail
           else {
             alert("error: please contact ssbti for support")

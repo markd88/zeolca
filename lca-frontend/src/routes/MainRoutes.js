@@ -13,6 +13,7 @@ import Efootprint from '../pages/efootprint'
 import ESG from '../pages/ESG'
 import Training from '../pages/training'
 
+import Admin from '../pages/admin'
 
 const MainRoutes = 
   {
@@ -71,6 +72,11 @@ const MainRoutes =
         path: '/ESG',
         auth: true,
         element: <ESG />,
+      },
+      {
+        path: '/admin',
+        auth: true,
+        element: <Admin />,
       }
     ]
   }
