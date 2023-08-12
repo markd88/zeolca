@@ -13,6 +13,7 @@ const App = ( props) => {
   if (params.p_unit) {
     params.product_full_unit = params.p_unit
   }
+  console.log(params)
 
   return (
     <div>

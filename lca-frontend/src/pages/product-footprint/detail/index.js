@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Tabs, Button, Skeleton } from 'antd';
 import Display from './display';
 import Model from './model';
+import List from './list';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { ArrowLeftOutlined } from '@ant-design/icons';
 import { useTranslation } from "react-i18next";
@@ -50,7 +51,7 @@ const App = () => {
   };
   const navigate = useNavigate()
   const handleClick = () => {
-    navigate("/product-carbon-footprint", {
+    navigate("/LCA", {
       replace: false
     })
   }
@@ -227,6 +228,13 @@ const App = () => {
           key: '2',
           children: <Model {...params} setTab={setTab}  fetchInputOutputData={fetchData} fetchProcessData={fetchData} getData_inputoutput={getData_inputoutput} getData_process={getData_process}/>,
         },
+        {
+          label: t("list"),
+          key: '3',
+          children: <List {...params} setTab={setTab}  fetchInputOutputData={fetchData} fetchProcessData={fetchData} getData_inputoutput={getData_inputoutput} getData_process={getData_process}/>,
+        },
+
+
       ]}/>
 
     </div> : <Skeleton/>

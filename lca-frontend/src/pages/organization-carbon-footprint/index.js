@@ -75,17 +75,11 @@ const App = () => {
     <Divider/>
 
 
-
+    <a href={link}>
     <Image
     width={1000}
     src="/images/organization.png"/>
-
-    {/* <iframe id="bi_iframe" 
-    src={link}
-    width={1000}
-    height={500}
-    title={t('training')}>
-    </iframe> */}
+    </a>
        
     </div>
   )

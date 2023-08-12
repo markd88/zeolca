@@ -5,11 +5,13 @@
   "LCA-note": "LCA筆記",
   "ESG": "ESG申報平台 - CDP",
   "training": "培訓與顧問",
+  "list": "模型清单",
+  "please_type_email": "请输入（下游）用户的邮箱。发布后，此（下游）用户将获得此产品模型的数据",
 
   "duplicate_text": "复制" ,    
   "duplicate": "复制"  , 
   "publish": "发布",
-  "publish_text": "发布至私有数据库",
+  "publish_text": "发布至数据库",
   "cannot_modify": "如需修改，请删除重新填写",
   "unit_note": "*单位: 请填写该数据时间段产品数量统计单位，例如: kg, ton, m3, ft2, unit, pair(s), piece(s), item(s), MJ, kWh, …。",
   "forget_password":"忘记密码？请联系:ali@nanozeo.com",
@@ -107,7 +109,7 @@
   "carbon_footprint_result":"碳足迹结果",
   "life_cycle_model": "生命周期建模",
 
-
+  "process": "流程",
   "process_type": "所属环节",
   "process_name": "工序名称",
   "process_main_output": "产出物",

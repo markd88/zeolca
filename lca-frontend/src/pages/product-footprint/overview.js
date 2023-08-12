@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef, Suspense } from 'react';
 import { Space, Table } from 'antd';
-import { Input, Select, Button, Drawer, message, Popconfirm, Dropdown } from 'antd';
+import { Input, Button, Drawer, message, Popconfirm, Dropdown, Modal  } from 'antd';
 import { SearchOutlined, DownOutlined, PlusOutlined  } from '@ant-design/icons';
 import MyDrawer from './NewItem.js';
 import { useTranslation } from "react-i18next";
@@ -329,28 +329,6 @@ const App = () => {
       </Dropdown>
       ),
     },
-    //#region
-      // {
-    //   title: 'Tags',
-    //   key: 'tags',
-    //   dataIndex: 'tags',
-    //   render: (_, { tags }) => (
-    //     <>
-    //       {tags.map((tag) => {
-    //         let color = tag.length > 5 ? 'geekblue' : 'green';
-    //         if (tag === 'loser') {
-    //           color = 'volcano';
-    //         }
-    //         return (
-    //           <Tag color={color} key={tag}>
-    //             {tag.toUpperCase()}
-    //           </Tag>
-    //         );
-    //       })}
-    //     </>
-    //   ),
-    // },
-    //#endregion
     ];
 
 
@@ -447,51 +425,13 @@ const App = () => {
 
     }
 
-    const publish = async () => {
-      // console.log('start publish')
-      
-      setLoading(true);
-      let token = JSON.parse(localStorage.getItem('token'));
-      const url = global_config.root_url +`/auth/publishProduct`
+
+  const publish = () => {
+    setIsModalOpen(true);
     
-      axios.post(url, {index: product_key}, { 
-          headers: {
-            "Authorization" : `Bearer ${token}`} 
-                    })
-          .then((response) => {
-            console.log(response)
-            //  success
-            if (response.data.status === 0) {
-              console.log('publish product success')
+  }
 
-              fetchData()
-
-            } else if (response.data.status === 2) {
-                // status:2 means jwt error or expire
-                navigate("/login", {
-                  replace: true,
-                })
-            }
-            //  fail
-            else {
-              alert("error: please contact ssbti for support")
-            }
-          })
-          .catch((error) => {
-            if (error.response) {
-              // console.log(error.response)
-            } else if (error.request) {
-              // console.log('network error')
-            } else {
-              // console.log(error)
-            }
-          })
-
-
-
-
-    }
-
+  let inputRef = useRef(null);
 
   
   const items = [
@@ -500,20 +440,7 @@ const App = () => {
         <Button> {t('detail')} </Button> ,
       key: "detail"
     },
-    // {  
-    //   label: 
-    //   <Popconfirm
-    //     placement="top"
-    //     title={t('copy_text')}
-    //     // description={description}
-    //     onConfirm={confirm}
-    //     okText="Yes"
-    //     cancelText="No"
-    //   >
-    //     <Button> {t('copy')} </Button> 
-    //   </Popconfirm>,
-    //   key: "copy"
-    // },
+
     {  
       label: 
       <Popconfirm
@@ -530,16 +457,7 @@ const App = () => {
     },
     {  
       label: 
-      <Popconfirm
-        placement="left"
-        title={t('publish_text')}
-        // description={description}
-        onConfirm={publish}
-        okText={t('confirm')}
-        cancelText={t('cancel')}
-      >
-        <Button type="primary" > {t('publish')} </Button> 
-      </Popconfirm>,
+      <Button type="primary" onClick={publish}> {t('publish')} </Button> ,
       key: "publish"
     },
     {  
@@ -564,6 +482,66 @@ const App = () => {
 
   }, [JSON.stringify(tableParams)])
 
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleOk = () => {
+    console.log(inputRef)
+    let value = inputRef.current.value;
+    console.log(value)
+    let token = JSON.parse(localStorage.getItem('token'));
+    const url = global_config.root_url +`/auth/publishProduct`
+    console.log(value, product_key)
+    axios.post(url, {email: value, p_index: product_key}, { 
+        headers: {
+          "Authorization" : `Bearer ${token}`} 
+                  })
+        .then((response) => {
+          console.log(response)
+          //  success
+          if (response.data.status === 0) {
+            // console.log('delete product success')
+
+            fetchData()
+
+          } else if (response.data.status === 2) {
+              // status:2 means jwt error or expire
+              navigate("/login", {
+                replace: true,
+              })
+          } else if (response.data.status === 3) {
+            // status:3 wrong email format
+            alert("email does not exist")
+        }
+
+
+          //  fail
+          else {
+            alert("error: please contact ssbti for support")
+          }
+        })
+        .catch((error) => {
+          if (error.response) {
+            // console.log(error.response)
+          } else if (error.request) {
+            // console.log('network error')
+          } else {
+            // console.log(error)
+          }
+        })
+
+
+  setIsModalOpen(false);
+  inputRef.current.value = null;
+  };
+  const handleCancel = () => {
+    setIsModalOpen(false);
+    inputRef.current.value = null;
+  };
+
+  const [inputValue, setInputValue] = useState("");
+
+
   return (
 
     <div>
@@ -576,25 +554,7 @@ const App = () => {
       <div style={{
         margin: '10px 10px 10px 10px',
       }}>
-        {/* <Search
-        placeholder="input search text"
-        allowClear
-        onSearch={onSearch}
-        style={{
-          width: 250,
 
-        }}
-      />
-        <Select
-          size={size}
-          defaultValue="a1"
-          onChange={handleChange}
-          style={{
-            marginLeft: 10,
-            width: 200,
-          }}
-          options={options}
-        /> */}
         <Button 
           type="primary" 
           onClick={showDrawer} 
@@ -628,6 +588,19 @@ const App = () => {
       >
         <MyDrawer/>
       </Drawer>
+
+      <Modal title={t('publish') + t('approveAccess')} open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+        <p>{t('please_type_email')}</p>
+      <Input
+        ref={inputRef}
+        type="text"
+        value={inputValue}
+        onChange={(e) => setInputValue(e.target.value)}
+      />
+
+      </Modal>
+
+
       </div>
     )
   };

@@ -80,13 +80,12 @@ const App = () => {
     <Divider/>
 
 
-{/* 
-    <PdfPreview prfUrl={pdf}/> */}
-
+    <a href={link}>
     <Image
     width={1000}
-    src="/images/training.png"/>
-       
+    src="/images/training.png"/>   
+    </a>
+
     </div>
   )
 

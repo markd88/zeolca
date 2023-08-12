@@ -5,11 +5,14 @@
   "LCA-note": "LCA筆記",
   "ESG": "ESG申報平台 - CDP",
   "training": "培訓與顧問",
+  "list": "模型清单",
+
+  "please_type_email":"Please provide the email address of the user with whom you would like to share the product",
 
   "duplicate_text": "Duplicate"  ,
   "duplicate": "Duplicate"  ,
   "publish": "Publish",
-  "publish_text": "Publish to private database",
+  "publish_text": "Publish to database",
   "cannot_modify": "If you want to modify, please delete and create again.",
   "unit_note": "*Unit: Please fill in the unit of the product quantity in this manufacturing period, for example: kg, ton, m3, ft2, unit, pair(s), piece(s), item(s), MJ, kWh, ….",
   "forget_password":"Forget Password? Please contact:ali@nanozeo.com",  
@@ -106,7 +109,7 @@
   "carbon_footprint_result":"Carbon footprint result",
   "life_cycle_model": "Life cycle model",
 
-
+  "process": "Process",
   "process_type": "Stage",
   "process_name": "Process name",
   "process_main_output": "Output",

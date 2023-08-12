@@ -24,19 +24,13 @@ const App = () => {
 
     <Divider/>
 
-    {/* <iframe id="bi_iframe" 
-    src={link} 
-    width={1000}
-    height={500}
-    title="Efootprint">
-    </iframe> */}
 
-
+    <a href={link}>
     <Image
     width={1000}
     src="/images/efootprint.png"/>
 
-       
+    </a>
 
     </div>
   )

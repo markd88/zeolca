@@ -158,7 +158,7 @@ exports.duplicateProduct = async (req, res) => {
     const db_res = await db.query(sql, [p_index])
     console.log("duplicated: ",db_res)
     if (db_res.affectedRows !== 1) {
-      return res.send({status: 1, message: 'publish product fail, this is a backend error'})
+      return res.send({status: 1, message: 'duplicate product fail, this is a backend error'})
     }
     let new_product_id = db_res.insertId
 
@@ -355,7 +355,8 @@ exports.publishProduct = async (req, res) => {
   try{
     const p_info = req.body
     const userid = req.auth.id
-    const p_index = p_info.index
+    const p_index = p_info.p_index
+    const email = p_info.email
 
    
     // first check if the user owns the product
@@ -369,15 +370,27 @@ exports.publishProduct = async (req, res) => {
       return res.send({status: 1, message: "has not right to publish"})
     }
 
+    let sql = `select * from users where email=?`
+    let sql_res = await db.query(sql, [email])
+
+    if (sql_res.length == 0 ) {
+      return res.send({status: 1, message: "email does not exist"})
+    }
+
     await update_footprint(p_index)
 
+    let current_access = db_user[0].publish
+    console.log(current_access)
 
-    const sql = `UPDATE product SET publish = 1 WHERE id = ? `
+  
+    
 
-    const db_res = await db.query(sql, [p_index])
-    if (db_res.affectedRows !== 1) {
-      return res.send({status: 1, message: 'publish product fail, this is a backend error'})
-    }
+    // sql = `UPDATE product SET publish = 1 WHERE id = ? `
+
+    // const db_res = await db.query(sql, [p_index])
+    // if (db_res.affectedRows !== 1) {
+    //   return res.send({status: 1, message: 'publish product fail, this is a backend error'})
+    // }
 
     // console.log(db_res)
     return res.send({status: 0, message: 'pulish product create success'})

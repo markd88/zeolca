@@ -8,10 +8,9 @@ import {
   Cascader,
   DatePicker,
   InputNumber,
-  Upload,
 } from 'antd';
 import { useTranslation } from "react-i18next";
-import { PlusOutlined } from '@ant-design/icons';
+
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import global_config from '../../global';
@@ -34,7 +33,7 @@ const App = () => {
     let token = JSON.parse(localStorage.getItem('token'));
     const url = global_config.root_url +`/auth/createNewProduct`
     
-    values.product_unit = "temp#" + values.product_unit 
+    values.product_unit = "temp#" + values.product_unit[1]
 
     const start = values.product_stats_range[0].format('YYYY/MM/DD')
     const end = values.product_stats_range[1].format('YYYY/MM/DD')
@@ -45,6 +44,7 @@ const App = () => {
         "Authorization" : `Bearer ${token}`} 
     } )
     .then((response) => {
+      console.log(response)
       // success
       if (response.data.status === 0) {
         alert("create new product success")
@@ -312,15 +312,132 @@ const App = () => {
         rules={[
           {
             required: true,
-            message: t('required'),
+            message:  t('required'),
           },
         ]}
         >
-        {/* <Cascader
-          options={unit_options}/> */}
-          <Input />
-         
+        <Cascader
+          options={[
+            {
+              value: 'common',
+              label: t('common'),
+              children: [
+                {
+                  value: 'kg',
+                  label: 'kg',
+                },
+                {
+                  value: 't',
+                  label: 't',
+                },
+                {
+                  value: 'm',
+                  label: 'm',
+                },
+                {
+                  value: 'm2',
+                  label: 'm2',
+                },
+                {
+                  value: 'm3',
+                  label: 'm3',
+                },
+              ],
+            },
+            {
+              value: 'all',
+              label: t('all'),
+              children: [
+                {
+                  value: 100,
+                  label: 100
+                },
+                { 
+                  value: 'KWh',
+                  label: "KWh"
+                },
+                { 
+                  value: 'L',
+                  label: "L"
+                },
+                { 
+                  value: 'MJ',
+                  label: "MJ"
+                },
+                { 
+                  value: 'Nm3',
+                  label: "Nm3"
+                },
+                { 
+                  value: 'W',
+                  label: "W"
+                },
+                { 
+                  value: 'floor',
+                  label: "floor"
+                },
+                { 
+                  value: 'head·yr',
+                  label: 'head·yr'
+                },
+                { 
+                  value: 'kg',
+                  label:'kg'
+                },
+                { 
+                  value: 'm',
+                  label: 'm'
+                },
+                { 
+                  value: 'm2',
+                  label: 'm2'
+                },
+                { 
+                  value: 'm3',
+                  label:'m3'
+                },
+                { 
+                  value: 'night',
+                  label: 'night'
+                },
+                { 
+                  value: 'person·km',
+                  label: 'person·km'
+                },
+                { 
+                  value: 'piece',
+                  label: 'piece'
+                },
+                { 
+                  value:   't',
+                  label:  't'
+                },
+                { 
+                  value: 't-RE',
+                  label: 't-RE'
+                },
+                { 
+                  value: 't·km',
+                  label: 't·km'
+                },
+                { 
+                  value:  'unit',
+                  label:  'unit'
+                },
+                { 
+                  value: 'vehicle',
+                  label: 'vehicle'
+                },
+                { 
+                  value:  'year.km2',
+                  label:  'year.km2'
+                }
+              ]
+            }
+          ]}/>
       </Form.Item>
+
+
       {t("unit_note")} 
 
 
@@ -367,37 +484,6 @@ const App = () => {
             <Radio value="product_cradle_to_grave"> {t('product_cradle_to_grave')} </Radio>
           </Radio.Group>
       </Form.Item>
-
-      {/* <Form.Item label={t('upload')} valuePropName="fileList" hidden={true}>
-          <Upload action="/upload.do" listType="picture-card">
-            <div>
-              <PlusOutlined />
-              <div
-                style={{
-                  marginTop: 8,
-                }}
-              >
-                {t('upload')}
-              </div>
-            </div>
-          </Upload>
-      </Form.Item> */}
-
-      {/* <Form.Item 
-        label={t('product_operation')}
-        name='operations'
-        hidden={true}
-        rules={[
-          {
-            required: true,
-            message: 'Please choose!',
-          },
-        ]}>
-          <Radio.Group>
-            <Radio value="product_build_model"> {t('product_build_model')} </Radio>
-            <Radio value="product_save_only"> {t('product_save_only')} </Radio>
-          </Radio.Group>
-      </Form.Item> */}
 
       <Form.Item
         wrapperCol={{

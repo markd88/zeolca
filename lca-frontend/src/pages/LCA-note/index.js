@@ -76,17 +76,13 @@ const App = () => {
 
 
 
+    <a href={link}>
     <Image
     width={1000}
     src="/images/lcanote.png"/>
+    </a>
 
-    {/* <iframe id="bi_iframe" 
-    src={link}
-    width={1000}
-    height={500}
-    title={t('training')}>
-    </iframe> */}
-       
+
     </div>
   )
 

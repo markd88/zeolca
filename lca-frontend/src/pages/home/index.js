@@ -16,16 +16,17 @@ const App = () =>
     <div>
 
 
-    <Button type="primary" href={link}>{t('home')}</Button>
+    <Button type="primary" href={link}>{t('home_page')}</Button>
 
     <Divider/>
 
-
+<a href={link}>
     <Image
     width={1000}
     src="/images/home.png"/>
 
        
+</a>
 
     </div>
   )

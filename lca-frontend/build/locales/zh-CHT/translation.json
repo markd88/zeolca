@@ -6,10 +6,14 @@
   "training": "培訓與顧問",
   "factor_db": "排放因子查询",
 
+  "list": "模型清单",
+  "please_type_email": "请输入（下游）用户的邮箱。发布后，此（下游）用户将获得此产品模型的数据",
+
+
   "duplicate_text": "复制" ,  
   "duplicate": "复制" ,   
   "publish": "发布",
-  "publish_text": "发布至私有数据库",
+  "publish_text": "发布至数据库",
   "cannot_modify": "如需修改，請刪除重填。",  
   "unit_note": "*單位: 請填寫該資料時間段產品數量統計單位，例如: kg, ton, m3, ft2, unit, pair(s), piece(s), item(s), MJ, kWh, …。",
   "forget_password":"忘記密碼？請聯繫：ali@nanozeo.com",
@@ -107,7 +111,7 @@
   "carbon_footprint_result":"碳足跡結果",
   "life_cycle_model": "生命週期建模",
 
-
+  "process": "流程",
   "process_type": "所屬環節",
   "process_name": "工序名稱",
   "process_main_output": "產出物",
@@ -194,6 +198,7 @@
   "basic_info" : "基礎訊息",
   "trans_info": "運輸訊息",
 
+  
   "input_process": "所屬工序",
   "input_type": "類型",
   "input_name": "名稱",
