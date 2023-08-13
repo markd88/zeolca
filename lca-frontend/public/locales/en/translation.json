@@ -1,11 +1,14 @@
 { 
+  "return": "Return",
 
-  "LCA": "LCA產品足跡",
-  "efootprint": "進階eFootprint建模",
-  "LCA-note": "LCA筆記",
-  "ESG": "ESG申報平台 - CDP",
-  "training": "培訓與顧問",
-  "list": "模型清单",
+  "LCA": "Build LCA",
+  "efootprint": "Advanced eFootprint",
+  "LCA-note": "LCA News Update",
+  "ESG": "ESG Disclosure",
+  "training": "Trainings & Consulting Services",
+  "list": "List",
+  "factor_db": "Carbon Footprint Datasets",
+
 
   "please_type_email":"Please provide the email address of the user with whom you would like to share the product",
 

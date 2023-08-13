@@ -157,14 +157,6 @@ const App = () => {
               </Dropdown>
             
               {t('language')}
-            {/* <Dropdown
-              menu={{
-                items: personalItems,
-              }}
-              placement="bottomRight"
-            >
-              <Avatar size="large" icon={<UserOutlined />} />
-            </Dropdown> */}
 
             </Row>  
           

@@ -1,12 +1,14 @@
 { 
 
-  "LCA": "LCA產品足跡",
-  "efootprint": "進階eFootprint建模",
-  "LCA-note": "LCA筆記",
-  "ESG": "ESG申報平台 - CDP",
-  "training": "培訓與顧問",
+  "return": "返回主页",
+  "LCA": "LCA产品足迹",
+  "efootprint": "进入eFootprint建模",
+  "LCA-note": "LCA笔记",
+  "ESG": "ESG申报平台 - CDP",
+  "training": "培训与顾问",
   "list": "模型清单",
-  "please_type_email": "请输入（下游）用户的邮箱。发布后，此（下游）用户将获得此产品模型的数据",
+  "please_type_email": "请输入（下游）用户的邮箱。发布后，此（下游）用户将获得此产品模型的数据", 
+   "factor_db": "排放因子查询",
 
   "duplicate_text": "复制" ,    
   "duplicate": "复制"  , 

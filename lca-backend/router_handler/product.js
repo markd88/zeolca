@@ -1,3 +1,4 @@
+const e = require('express')
 const db = require('../db/index')
 
 
@@ -260,6 +261,7 @@ exports.getfactor_public_private = async (req, res) => {
     const factor_database = req.body.factor_database
     const factor_name = req.body.factor_name
     const if_transportation = req.body.transportation
+    
 
     console.log(factor_database, factor_name, if_transportation )
 
@@ -326,10 +328,17 @@ exports.getfactor_public_private = async (req, res) => {
     final_result = final_result.map(value => (
       { ...value, property: "public" }
     ))
-    let sql_product = `SELECT * FROM product where publish=1 AND uid=?`
-    let product_result = await db.query(sql_product,[req.auth.id])
+    let sql_product = `SELECT * FROM product`
+    let product_result = await db.query(sql_product)
 
-    
+    console.log(req.auth.email)
+    product_result = product_result.filter((data) => {
+      let current_access = data.publish.split("#")
+      if (current_access.includes(req.auth.email)) {
+        return true
+      }
+    })
+
     product_result = product_result.map(value =>  {
       let old = value.id
       return ({ ...value, property: "private", id: old + 10000 })
@@ -338,7 +347,7 @@ exports.getfactor_public_private = async (req, res) => {
 
     let combinedArray = [...product_result, ...final_result];
     total = combinedArray.length
-    console.log('final result', product_result)
+    // console.log('final result', product_result)
 
     return res.send({status:0, message: "success", data: combinedArray, total: total})
 
@@ -351,13 +360,14 @@ exports.getfactor_public_private = async (req, res) => {
 }
 
 
-exports.publishProduct = async (req, res) => {
+exports.publishProductApprove = async (req, res) => {
   try{
     const p_info = req.body
     const userid = req.auth.id
     const p_index = p_info.p_index
     const email = p_info.email
 
+    console.log(p_info, userid, p_index, email)
    
     // first check if the user owns the product
     const sql_get = `select * from product where id=?`
@@ -374,32 +384,111 @@ exports.publishProduct = async (req, res) => {
     let sql_res = await db.query(sql, [email])
 
     if (sql_res.length == 0 ) {
-      return res.send({status: 1, message: "email does not exist"})
+      return res.send({status: 3, message: "email does not exist"})
     }
 
     await update_footprint(p_index)
 
     let current_access = db_user[0].publish
-    console.log(current_access)
+    console.log("current access", current_access)
+
+
+    if (current_access === "") {
+      let new_value = "#" + email + "#"
+      sql = `UPDATE product SET publish = ? WHERE id = ? `
+      const db_res = await db.query(sql, [new_value, p_index])
+
+    }
+    else {
+      let current_array = current_access.split("#")
+      console.log('current array', current_array)
+      if (current_array.includes(email)) {
+        console.log("already published")
+        return res.send({status: 0, message: 'pulish product success'})
+      }
+      else {
+        let new_value = current_access + email + "#"
+        sql = `UPDATE product SET publish = ? WHERE id = ? `
+        const db_res = await db.query(sql, [new_value, p_index])
+      }
+
+
+    }
 
   
-    
 
-    // sql = `UPDATE product SET publish = 1 WHERE id = ? `
-
-    // const db_res = await db.query(sql, [p_index])
-    // if (db_res.affectedRows !== 1) {
-    //   return res.send({status: 1, message: 'publish product fail, this is a backend error'})
-    // }
-
-    // console.log(db_res)
-    return res.send({status: 0, message: 'pulish product create success'})
+    return res.send({status: 0, message: 'pulish product success'})
 
   } catch (err) {
     return res.send({status: 1, message: err})
   }
 }
 
+
+
+exports.publishProductRemove = async (req, res) => {
+  try{
+    const p_info = req.body
+    const userid = req.auth.id
+    const p_index = p_info.p_index
+    const email = p_info.email
+
+    console.log(p_info, userid, p_index, email)
+   
+    // first check if the user owns the product
+    const sql_get = `select * from product where id=?`
+    const db_user = await db.query(sql_get,[p_index])
+    // console.log(db_user)
+    if (db_user.length != 1 ) {
+      return res.send({status: 1, message: "there a two primary key, this is a backend error"})
+    }
+    if (db_user[0].uid !== userid) {
+      return res.send({status: 1, message: "has not right to publish"})
+    }
+
+    let sql = `select * from users where email=?`
+    let sql_res = await db.query(sql, [email])
+
+    if (sql_res.length == 0 ) {
+      return res.send({status: 3, message: "email does not exist"})
+    }
+
+    await update_footprint(p_index)
+
+    let current_access = db_user[0].publish
+    console.log('current access',current_access)
+
+
+    if (current_access === "") {
+      console.log("already remove published")
+      return res.send({status: 0, message: 'remove pulish product success'})
+    }
+    else {
+      let current_array = current_access.split("#")
+      console.log('current array', current_array)
+      if (current_array.includes(email)) {
+        let newArray = current_array.filter(item => item !== email);
+        let new_value = newArray.join("#")
+        sql = `UPDATE product SET publish = ? WHERE id = ? `
+        const db_res = await db.query(sql, [new_value, p_index])
+
+      }
+      else {
+        console.log("already remove published")
+        return res.send({status: 0, message: 'remove pulish product success'})
+      }
+
+
+    }
+
+
+
+    return res.send({status: 0, message: 'remove pulish product success'})
+
+  } catch (err) {
+    return res.send({status: 1, message: err})
+  }
+}
 
 
 

@@ -39,7 +39,10 @@ router.post('/createNewProduct',  authenticateToken, productHandler.createNewPro
 router.post('/deleteProduct',authenticateToken,  productHandler.deleteProduct)
 router.post('/getAllProduct_uid',authenticateToken,  productHandler.getAllProduct_uid)
 router.post('/updateProduct',authenticateToken,  productHandler.updateProduct)
-router.post('/publishProduct', authenticateToken, productHandler.publishProduct)
+router.post('/publishProductApprove', authenticateToken, productHandler.publishProductApprove)
+router.post('/publishProductRemove', authenticateToken, productHandler.publishProductRemove)
+
+
 router.post('/duplicateProduct', authenticateToken, productHandler.duplicateProduct)
 
 

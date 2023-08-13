@@ -431,9 +431,7 @@ const App = () => {
     
   }
 
-  let inputRef = useRef(null);
 
-  
   const items = [
     {  
       label: 
@@ -485,13 +483,15 @@ const App = () => {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const handleOk = () => {
-    console.log(inputRef)
-    let value = inputRef.current.value;
-    console.log(value)
+  const handleApprove = () => {
+    if (inputValue === "") {
+      return 
+    }
+    let value = inputValue
+    console.log("handleapprove", value, product_key)
     let token = JSON.parse(localStorage.getItem('token'));
-    const url = global_config.root_url +`/auth/publishProduct`
-    console.log(value, product_key)
+    const url = global_config.root_url +`/auth/publishProductApprove`
+
     axios.post(url, {email: value, p_index: product_key}, { 
         headers: {
           "Authorization" : `Bearer ${token}`} 
@@ -532,11 +532,67 @@ const App = () => {
 
 
   setIsModalOpen(false);
-  inputRef.current.value = null;
+  setInputValue("");
   };
+
+
+  const handleRemove = () => {
+    if (inputValue === "") {
+      return 
+    }
+    let value = inputValue
+
+    let token = JSON.parse(localStorage.getItem('token'));
+    const url = global_config.root_url +`/auth/publishProductRemove`
+    console.log("handleremove", value, product_key)
+    axios.post(url, {email: value, p_index: product_key}, { 
+        headers: {
+          "Authorization" : `Bearer ${token}`} 
+                  })
+        .then((response) => {
+          console.log(response)
+          //  success
+          if (response.data.status === 0) {
+            // console.log('delete product success')
+
+            fetchData()
+
+          } else if (response.data.status === 2) {
+              // status:2 means jwt error or expire
+              navigate("/login", {
+                replace: true,
+              })
+          } else if (response.data.status === 3) {
+            // status:3 wrong email format
+            alert("email does not exist")
+        }
+
+
+          //  fail
+          else {
+            alert("error: please contact ssbti for support")
+          }
+        })
+        .catch((error) => {
+          if (error.response) {
+            // console.log(error.response)
+          } else if (error.request) {
+            // console.log('network error')
+          } else {
+            // console.log(error)
+          }
+        })
+
+
+  setIsModalOpen(false);
+  setInputValue("");
+  };
+
+
+
   const handleCancel = () => {
     setIsModalOpen(false);
-    inputRef.current.value = null;
+    setInputValue("");
   };
 
   const [inputValue, setInputValue] = useState("");
@@ -589,14 +645,36 @@ const App = () => {
         <MyDrawer/>
       </Drawer>
 
-      <Modal title={t('publish') + t('approveAccess')} open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+      <Modal 
+      title={t('publish')} 
+      open={isModalOpen} 
+      onCancel={handleCancel}
+      footer={[
+        <Button key="back" onClick={handleCancel}>
+          {t('return')}
+        </Button>,
+        <Button key="remove" type="primary"  onClick={handleRemove}>
+          {t("removeAccess")}
+        </Button>,
+        <Button
+          key="approve"
+          type="primary"
+          onClick={handleApprove}
+        >
+          {t('approveAccess')}
+        </Button>,
+      ]}
+      >
+
+
         <p>{t('please_type_email')}</p>
       <Input
-        ref={inputRef}
         type="text"
         value={inputValue}
         onChange={(e) => setInputValue(e.target.value)}
+
       />
+
 
       </Modal>
 
