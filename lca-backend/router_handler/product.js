@@ -330,8 +330,8 @@ exports.getfactor_public_private = async (req, res) => {
     ))
     let sql_product = `SELECT * FROM product`
     let product_result = await db.query(sql_product)
-
-    console.log(req.auth.email)
+    
+    console.log(product_result, req.auth.email)
     product_result = product_result.filter((data) => {
       let current_access = data.publish.split("#")
       if (current_access.includes(req.auth.email)) {
@@ -347,7 +347,7 @@ exports.getfactor_public_private = async (req, res) => {
 
     let combinedArray = [...product_result, ...final_result];
     total = combinedArray.length
-    // console.log('final result', product_result)
+    console.log('final result', combinedArray)
 
     return res.send({status:0, message: "success", data: combinedArray, total: total})
 
