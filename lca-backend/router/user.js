@@ -21,6 +21,8 @@ router.post('/reguser', expressJoi(reg_schema), userHandler.regUser)
 
 
 router.post('/login', expressJoi(login_schema), userHandler.login)
+// router.post('/logout', userHandler.logout)
+
 
 
 router.get('/test', (req, res) => {

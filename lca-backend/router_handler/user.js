@@ -222,14 +222,14 @@ exports.regUser =  async (req, res) => {
        return res.send({status: 3, message: "this username has been used, please use another one"})
      }
 
-    const user = {
-      'username': userinfo.username, 
-      'company': userinfo.company,
-      "email": userinfo.email,
-    }
-    const tokenStr = jwt.sign(user, config.env.jwtSecretKey, {
-      expiresIn: '10m', // token 有效期为 10 min
-    })
+    // const user = {
+    //   'username': userinfo.username, 
+    //   'company': userinfo.company,
+    //   "email": userinfo.email,
+    // }
+    // const tokenStr = jwt.sign(user, config.env.jwtSecretKey, {
+    //   expiresIn: '10m', // token 有效期为 10 min
+    // })
 
 
   const sql_1 = `insert into users (username, password, email, company, createTime, recentTime ,verify) values (?,?,?,?,?,?,?)`
@@ -253,6 +253,46 @@ exports.regUser =  async (req, res) => {
 }
 
 
+// exports.logout = async (req, res) => {
+//   try {
+//     const userinfo = req.body
+//     const sql = `select * from users where username=?`
+//     const login_results = await db.query(sql, userinfo.username)
+//     if (login_results.length !== 1) return res.send({status: 1, message: '后端数据库操作失败！'})
+//     if (login_results[0].password !== userinfo.password) {
+//       return res.send({status: 1, message: '密码错误！'})
+//     }
+//     if (Number(login_results[0].verify) !== 1) {
+//       console.log(login_results);
+//       return res.send({status: 1, message: '请等待ssbti管理员审核账户'})
+//     }
+//     const login_res = login_results[0]
+//     const user = {
+//       'username': login_res.username, 
+//       'company': login_res.company,
+//       "id": login_res.id,
+//       "email": login_res.email,
+//     }
+//     const tokenStr = jwt.sign(user, config.env.jwtSecretKey, {
+//       expiresIn: '10h', // token 有效期为 1 个小时
+//     })
+//     const login_time_update = `update users set recentTime = ? where username=?`
+//     const recentTime = new Date().toISOString().slice(0, 19).replace('T', ' ');
+//     const recentTime_results = await db.query(login_time_update, [recentTime, userinfo.username])
+//     // console.log(recentTime_results.affectedRows)
+//     if (recentTime_results.affectedRows !== 1) return res.send({status: 1, message: '后端数据库操作失败！'})
+//     return res.send({
+//           status: 0,
+//           message: '登录成功！',
+//           // 为了方便客户端使用 Token，在服务器端直接拼接上 Bearer 的前缀
+//           token: tokenStr,
+//         })
+
+//   } catch( err ) {
+//     return res.send({status: 1, message: `login fail with error ${err}`})
+//   }
+// }
+
 
 
 exports.login = async (req, res) => {
@@ -270,19 +310,24 @@ exports.login = async (req, res) => {
     }
     const login_res = login_results[0]
     const user = {
-      'username': login_res.username, 
-      'company': login_res.company,
-      "id": login_res.id,
-      "email": login_res.email,
+      username: login_res.username, 
+      company: login_res.company,
+      id: login_res.id,
+      email: login_res.email,
+      timestamp: Math.floor(Date.now() / 1000), // Include a timestamp to make each token unique
+      nonce: Math.random(),  // Include a random value as a nonce
     }
     const tokenStr = jwt.sign(user, config.env.jwtSecretKey, {
-      expiresIn: '10h', // token 有效期为 1 个小时
+      expiresIn: '1h', // token 有效期为 1 个小时
     })
-    const login_time_update = `update users set recentTime = ? where username=?`
+    const login_time_update = `update users set recentTime=?, token=? where username=?`
     const recentTime = new Date().toISOString().slice(0, 19).replace('T', ' ');
-    const recentTime_results = await db.query(login_time_update, [recentTime, userinfo.username])
+    const recentTime_results = await db.query(login_time_update, [recentTime, tokenStr, userinfo.username])
     // console.log(recentTime_results.affectedRows)
     if (recentTime_results.affectedRows !== 1) return res.send({status: 1, message: '后端数据库操作失败！'})
+
+
+
     return res.send({
           status: 0,
           message: '登录成功！',
@@ -294,6 +339,5 @@ exports.login = async (req, res) => {
     return res.send({status: 1, message: `login fail with error ${err}`})
   }
 }
-
 
 
