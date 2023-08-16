@@ -13,7 +13,7 @@ const joi = require('joi')
 const username = joi.string().min(3).max(20).required()
 const password = joi.string().alphanum().min(6).max(40).required()
 const email = joi.string().email({ minDomainSegments: 2, tlds: { allow: ['com', 'net', 'edu'] } })
-const company = joi.string().alphanum().min(1).max(40).required()
+const company = joi.string().min(1).max(40).required()
 
 
 
