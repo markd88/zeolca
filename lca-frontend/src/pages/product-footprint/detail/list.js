@@ -4,6 +4,7 @@ import { ArrowDownOutlined, ArrowRightOutlined } from '@ant-design/icons';
 
 import { useTranslation } from "react-i18next";
 import { Space, Table, Tag } from 'antd';
+import ExportExcel from './excel';
 
 const App = (props) => {
   const { t } = useTranslation();
@@ -11,6 +12,7 @@ const App = (props) => {
   params = {...params, product_scope: params.product_life_cycle_scope}
 
   let process_data = params.getData_process()
+  // console.log("process raw data", process_data)
   process_data = process_data.filter((value) => {
     if (value.parent_process === -1) {
       return true
@@ -19,13 +21,16 @@ const App = (props) => {
   }).map((data) => {
     return {...data, process_type: t(data.process_type)}
   })
-  let inputoutput_data = params.getData_inputoutput()
+  const  raw_inputoutput_data = params.getData_inputoutput()
 
+  console.log("before", raw_inputoutput_data)
 
+  
 
-  inputoutput_data = inputoutput_data.map((value) => {
+  let inputoutput_data = raw_inputoutput_data.map((value) => {
     let unit = JSON.parse(value.input_unit)[1]
-    let db =  JSON.parse(value.factor_db_basic).sum_factor + "    " +JSON.parse(value.factor_db_basic).factor_name 
+    let a = JSON.parse(value.factor_db_basic)
+    let db =  a.sum_factor + " / (" +  a.first +" / "+ a.second + ")" + a.factor_name + "#" + a.property + "# id:" + a.id
     let new_data = {...value,
       input_data_source: t(value.input_data_source),
       input_type: t(value.input_type),
@@ -189,24 +194,30 @@ const App = (props) => {
 
   ];
 
+  let ExcelExportData = raw_inputoutput_data
+
 
 
 
   return (
 <div>
+
+    <ExportExcel excelData={ExcelExportData} fileName={"Excel Export"}/>
+
+<Divider/>
 <>{t("process")}</>
-<Table columns={process_columns} dataSource={process_data}            
+<Table key='process' columns={process_columns} dataSource={process_data}            
 scroll={{
           y: '60vh',
         }} />
 <Divider/>
 <>{t('input')}</>
-<Table columns={inputoutput_columns} dataSource={input_data}  
+<Table key='input' columns={inputoutput_columns} dataSource={input_data}  
         scroll={{
           y: '60vh',
         }}/>
 <>{t('output')}</>
-<Table columns={inputoutput_columns} dataSource={output_data}     
+<Table key='output' columns={inputoutput_columns} dataSource={output_data}     
         scroll={{
           y: '60vh',
         }}/>

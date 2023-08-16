@@ -110,9 +110,6 @@ const App = () => {
             // // console.log("input length", response.data.length)
             input_output_length = response.data.length
 
-
-            
-
           } else if (response.data.status === 2) {
               // status:2 means jwt error or expire
               navigate("/login", {

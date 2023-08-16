@@ -3,7 +3,112 @@ const db = require('../db/index')
 
 
 
+function calculate(arr) {
+  // console.log(arr, "arr inside")
+  let sum = 0
+  for (let i = 0; i < arr.length; i++) { 
+      console.log(arr[i])
+      let quantity = arr[i].input_quantity
+      // console.log(quantity)
+      let unit = JSON.parse(arr[i].input_unit)[1]
 
+      if (unit != "kg" && unit != 't') {
+        if (Number(arr[i].manual) === 0) {
+          let db_basic = JSON.parse(arr[i].factor_db_basic)
+          let value = quantity * db_basic['sum_factor']
+          // console.log(db_basic.sum_factor)
+          if (db_basic['first'] === 't') {
+            value = value * 1000
+          }
+          if (db_basic['first'] === 'g') {
+            value = value / 1000
+          }
+          // console.log(value, '1')
+          sum += value
+        }
+        // manual
+        else {
+          let value = quantity *  arr[i].factor_name 
+          // console.log(db_basic.sum_factor, arr[i].factor_name)
+          if (arr[i].factor_unit === "gCO2e") {
+            value = value / 1000
+          }
+          // console.log(value, '2')
+          sum += value
+        }
+        
+      }
+      // unit is kg or t
+      else {
+
+
+
+        if (Number(arr[i].manual) === 0) {
+          
+          let db_basic = JSON.parse(arr[i].factor_db_basic)
+          let factor_second = db_basic["second"]
+          console.log(factor_second, "heresaaaa")
+          
+          if (factor_second == 't' && unit == 'kg') {
+            quantity = quantity / 1000
+          } else if (factor_second == 'kg' && unit == 't') {
+            quantity = quantity * 1000
+          }
+
+          let value = quantity * db_basic['sum_factor']
+          if (db_basic['first'] === 't') {
+            value = value * 1000
+          }
+          if (db_basic['first'] === 'g') {
+            value = value / 1000
+          }
+          // console.log(value, '3')
+          sum += value
+        }
+        // manual
+        else {
+
+          let value = quantity *  arr[i].factor_name 
+          if (arr[i].factor_unit === "gCO2e") {
+            value = value / 1000
+          }
+          // console.log(value, '4')
+          sum += value
+        }
+
+      }
+
+      let total_trans = 0
+      if (Number(arr[i].transportation) == 1) {
+        const weight = Number(arr[i].transportation_weight)
+        let road = JSON.parse(arr[i].road)
+        
+        for (let i = 0; i < road.length; i++)  {
+          const distance = road[i].distance
+          const factor =  road[i].factor_db_transportation.sum_factor
+
+          let value = distance * factor *  weight / 1000
+          console.log(value)
+          if (road[i].first == 'g') {
+            value = value / 1000
+          }
+          if (road[i].first == 't') {
+            value = value * 1000
+          }
+
+          total_trans = total_trans + value
+        }
+      console.log('trans', total_trans)
+      sum += total_trans
+
+      }
+
+
+  }
+  console.log('sum', sum)
+  
+  return sum
+}
 
 
 async function update_footprint(product_id) {
@@ -184,6 +289,7 @@ exports.duplicateProduct = async (req, res) => {
     let db_input
     for (var i = 0; i < db_res_process_old.length; i++) {
       process_info = db_res_process_old[i]
+      console.log("check process info",process_info)
       sql_process_new = `INSERT INTO process set ?`
       db_process_new = await db.query(sql_process_new, {
         product_id: new_product_id,
@@ -347,12 +453,13 @@ exports.getfactor_public_private = async (req, res) => {
 
     let combinedArray = [...product_result, ...final_result];
     total = combinedArray.length
-    console.log('final result', combinedArray)
+    console.log('final result', product_result)
 
     return res.send({status:0, message: "success", data: combinedArray, total: total})
 
 
   } catch(err) {
+    console.log(err)
     return res.send({status: 1, message: err})
 
   }
@@ -389,6 +496,8 @@ exports.publishProductApprove = async (req, res) => {
 
     await update_footprint(p_index)
 
+    
+
     let current_access = db_user[0].publish
     console.log("current access", current_access)
 
@@ -414,6 +523,7 @@ exports.publishProductApprove = async (req, res) => {
 
 
     }
+
 
   
 
@@ -796,8 +906,17 @@ exports.getAllInputOutput_product_id = async (req, res) => {
     const db_result = await db.query(sql, [product_id])
     // console.log(db_result)
 
-    const returned_data = db_result
+    
 
+    let returned_data = db_result
+
+    returned_data = returned_data.map((data) => {
+      let value = calculate([data]) 
+      console.log("calculated value",value)
+      return {...data, footprint:value}
+
+    })
+    console.log('returned data',returned_data)
     return res.send({status:0, message: "success", data: returned_data, length: returned_data.length})
   } catch(err) {
     return res.send({status: 1, message: err})
@@ -917,7 +1036,7 @@ exports.updateProcess = async (req, res) => {
       process_product_percentage: process_info.process_product_percentage,
       process_actual_quantity: process_info.process_actual_quantity,
       main_output: 1,
-      parent_process: "0",
+      parent_process: "-1",
     }
     let s = `insert into process set ?` 
     let resaa = await db.query(s, data)
@@ -965,8 +1084,32 @@ exports.updateProcess = async (req, res) => {
   }
 }
 
+// const update_inputoutput_record = async (email, db_result, product_id) => {
+
+//   let sql =  `select * from product where id=?`
+//   let sql_res = await db.query(sql,[product_id])
+//   let current_access = sql_res[0].publish.split("#")
+
+//   let value_to_be_check = db_result.filter((data) => {
+//     let a = JSON.parse(data.factor_db_basic)
+//     if (a.property === "private") {
+//       return true
+//     }
+//     return false
+//   })
+
+//   let promises = value_to_be_check.map((data) => {
+
+//   })
 
 
+// }
+
+
+
+
+// 1. 在calculate之前，更新inputoutput 中factor-db
+// 2. inputoutput中，不写死factor-db，只留id
 
 exports.getFootprint_pid = async (req, res) => {
   try{
@@ -1080,12 +1223,17 @@ exports.getFootprint_pid = async (req, res) => {
     // console.log(req)
 
     const userid = req.user.id
+    
     const product_id = req.body.product_id
     // should check if the user owns the product
     // console.log(product_id, userid)
 
     const sql = `select * from input_output where product_id=?`
     const db_result = await db.query(sql, [product_id])
+
+    // await update_inputoutput_record(email, db_result, product_id)
+    
+
     // console.log(db_result)
     let data = {}
     const raw_material = db_result.filter((data) => {
