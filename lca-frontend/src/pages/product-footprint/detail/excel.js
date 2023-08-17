@@ -7,7 +7,10 @@ import axios from 'axios';
 import global_config from "../../../global";
 import { useNavigate } from 'react-router-dom';
 
-const ExportExcel = ( {excelData, fileName} ) => {
+const ExportExcel = (props ) => {
+  let params = props;
+  let excelData = params.excelData
+  let fileName = params.fileName
   const { t } = useTranslation();
   const fileType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
   const fileExtension = '.xlsx';
@@ -24,7 +27,6 @@ const ExportExcel = ( {excelData, fileName} ) => {
         nextLevel = nextLevel.concat(value)
       }
       return {
-       
         footprint: value.footprint,
         input_name: value.input_name,
         process_type: t(value.process_type),
@@ -66,13 +68,14 @@ const ExportExcel = ( {excelData, fileName} ) => {
 
       excelData = array.map((value) => {
         return {
+          percentage: 1,
           footprint: value.footprint,
           input_name: value.input_name,
           process_type: t(value.process_type),
           input_quantity: value.input_quantity,
+          input_unit: JSON.parse(value.input_unit)[1],
           input_stat_note: value.input_stat_note,
           input_type: t(value.input_type),
-          input_unit: JSON.parse(value.input_unit)[1],
           input_data_source: t(value.input_data_source),
           factor_name_manual: value.factor_name,
           factor_unit_manual: value.factor_unit,
@@ -97,7 +100,9 @@ const ExportExcel = ( {excelData, fileName} ) => {
         // console.log("total", total)
         for (let j=0; j < v_cleaned[i].length; j++) {
           // console.log("aa", v_cleaned[i][j])
+          let old = v_cleaned[i][j].footprint / total
           v_cleaned[i][j].footprint = v_cleaned[i][j].footprint / total * footprint_total
+          v_cleaned[i][j].percentage = old
           v_cleaned[i][j].input_name = nextLevelData_data.input_name + "( " + v_cleaned[i][j].input_name + ")"
           excelData = excelData.concat(v_cleaned[i][j])
           // console.log("bb", v_cleaned[i][j])
@@ -180,8 +185,29 @@ const ExportExcel = ( {excelData, fileName} ) => {
     // now do some cleaning
     excelData = await cleanData(excelData)
 
+    // product
+    let product_info = [{
+      name: params.product_name,
+      model: params.product_model,
+      type: t(params.product_type),
+      quantity: params.product_quantity_unit,
+      scope: params.product_scope,
+      range: params.product_stats_range,
+      
+    }]
+
+    const anotherWs = XLSX.utils.json_to_sheet(product_info);
+    const sheetName = 'product';
+
+
     const ws = XLSX.utils.json_to_sheet(excelData);
     const wb = {Sheets: {'data': ws}, SheetNames: ['data'] };
+
+    // Add the new worksheet to the workbook
+    wb.Sheets[sheetName] = anotherWs;
+    wb.SheetNames.push(sheetName);
+
+
     const excelBuffer = XLSX.write(wb, {bookType: 'xlsx', type: 'array'});
     const data = new Blob([excelBuffer], {type: fileType});
     FileSaver.saveAs(data, fileName + fileExtension);

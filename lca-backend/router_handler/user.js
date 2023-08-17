@@ -234,15 +234,15 @@ exports.regUser =  async (req, res) => {
 
   const sql_1 = `insert into users (username, password, email, company, createTime, recentTime ,verify) values (?,?,?,?,?,?,?)`
   // const createTime = time.format('YYYY-MM-DD HH:mm:ss')
-  const createTime = new Date().toISOString().slice(0, 19).replace('T', ' ');
+  const createTime = new Date().toLocaleString('en-US', { timeZone: 'Asia/Shanghai' }).slice(0, 19).replace('T', ' ');
   const db_result = await db.query(sql_1, [userinfo.username, userinfo.password, userinfo.email, userinfo.company, createTime, createTime , 0 ])
   console.log(db_result)
   if (db_result.affectedRows != 1) {
     return res.send({ status: 1, message: '注册用户失败，请稍后再试！ this is a backend, database error' })
   }
-  console.log('Email Sent Successfully');
+ // console.log('Email Sent Successfully');
 
-  return res.send({status: 0, message: 'register success, please wait ssbti to approve'})
+  return res.send({status: 0, message: '已提交！ Application Submitted！ 請等待通知！'})
 
   } catch (err) {
     return res.send({
@@ -321,7 +321,7 @@ exports.login = async (req, res) => {
       expiresIn: '1h', // token 有效期为 1 个小时
     })
     const login_time_update = `update users set recentTime=?, token=? where username=?`
-    const recentTime = new Date().toISOString().slice(0, 19).replace('T', ' ');
+    const recentTime = new Date().toLocaleString('en-US', { timeZone: 'Asia/Shanghai' }).slice(0, 19).replace('T', ' ');
     const recentTime_results = await db.query(login_time_update, [recentTime, tokenStr, userinfo.username])
     // console.log(recentTime_results.affectedRows)
     if (recentTime_results.affectedRows !== 1) return res.send({status: 1, message: '后端数据库操作失败！'})

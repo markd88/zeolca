@@ -27,7 +27,6 @@ const App = () => {
 
   let params = {...state}
 
-  //console.log(params)
 
 
 

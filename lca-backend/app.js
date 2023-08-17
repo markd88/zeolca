@@ -64,7 +64,7 @@ app.use('/auth', [productRouter, gammaRouter,  databaseRouter, adminRouter])
 app.use(function (err, req, res, next) {
   // 数据验证失败
   if (err instanceof joi.ValidationError) {
-    console.log('validation error')
+    console.log('validation error', err)
     return res.send({status: 1, message: `form validation error: ${err}`})
   }
   if (err.name === 'UnauthorizedError') {

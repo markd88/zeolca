@@ -1,4 +1,10 @@
 { 
+
+  "waste_water": "廢水",
+  "waste_gas": "廢氣",
+  "waste_solid": "固廢",
+  "waste_danger": "危險廢物",
+
   "return": "返回主頁",
   "LCA": "LCA產品足跡",
   "efootprint": "進階eFootprint建模",

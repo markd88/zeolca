@@ -117,12 +117,12 @@ const App = () => {
       // console.log(response)
       // register success
       if (response.data.status == 0) {
-        alert(`注册成功，请等待ssbti管理员批准。`)
+        alert(`已提交注册信息！ Application Submitted！ 請等待ssbti管理员审核通知！`)
         navigate('/login', {
           replace: false
         })
       } else if (response.data.status == 3) {
-        alert('this email has been used, please login instead')
+        alert(response.data.message)
       }
       // register fail
 

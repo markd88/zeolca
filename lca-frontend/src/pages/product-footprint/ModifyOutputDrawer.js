@@ -531,14 +531,11 @@ const App = (props) => {
         ]}
       >
         <Select >
-          <Select.Option value={'raw_material'}>{t('raw_material')}</Select.Option>
-          <Select.Option value={"consumables"}>{t('consumables')}</Select.Option>
-          <Select.Option value={"energy"}>{t('energy')}</Select.Option>
-          <Select.Option value={"resource"}>{t('resource')}</Select.Option>
-          <Select.Option value={"transportation"}>{t('transportation')}</Select.Option>
-          <Select.Option value={"carbon_fixation"}>{t('carbon_fixation')}</Select.Option>
-          <Select.Option value={"recycled_material"}>{t('recycled_material')}</Select.Option>
-          <Select.Option value={"packing_material"}>{t('packing_material')}</Select.Option>
+          <Select.Option value={'waste_water'}>{t('waste_water')}</Select.Option>
+          <Select.Option value={"waste_gas"}>{t('waste_gas')}</Select.Option>
+          <Select.Option value={"waste_solid"}>{t('waste_solid')}</Select.Option>
+          <Select.Option value={"waste_danger"}>{t('waste_danger')}</Select.Option>
+
         </Select>
       </Form.Item>
 

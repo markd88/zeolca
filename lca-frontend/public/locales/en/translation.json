@@ -1,4 +1,9 @@
 { 
+  "waste_water": "Water Waste",
+  "waste_gas": "Gas Waste",
+  "waste_solid": "Solid Waste",
+  "waste_danger": "Danger Waste",
+
   "return": "Return",
 
   "LCA": "Build LCA",

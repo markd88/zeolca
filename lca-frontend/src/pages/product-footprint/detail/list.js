@@ -12,6 +12,7 @@ const App = (props) => {
   params = {...params, product_scope: params.product_life_cycle_scope}
 
   let process_data = params.getData_process()
+  let product_data = params.get
   // console.log("process raw data", process_data)
   process_data = process_data.filter((value) => {
     if (value.parent_process === -1) {
@@ -202,7 +203,7 @@ const App = (props) => {
   return (
 <div>
 
-    <ExportExcel excelData={ExcelExportData} fileName={"Excel Export"}/>
+    <ExportExcel {...params} excelData={ExcelExportData} fileName={"Excel Export"}/>
 
 <Divider/>
 <>{t("process")}</>

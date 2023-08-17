@@ -112,7 +112,7 @@ function Copyright(props) {
       }
       // login fail
       else if (response.data.status === 1) {
-        alert(response.data.message)
+        alert('已提交注册信息！ Application Submitted！ 請等待ssbti管理员审核通知！')
       }
 
       else {
