@@ -134,6 +134,7 @@
   "process_sale": "Distribution",
   "process_use": "Use",
   "process_dispose": "Disposal (End-of-life)",
+  "process_output" : "Output",
 
   "process_material_short": "Raw",
   "process_manu_short": "Manu",

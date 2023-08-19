@@ -27,6 +27,7 @@ const ExportExcel = (props ) => {
         nextLevel = nextLevel.concat(value)
       }
       return {
+       
         footprint: value.footprint,
         input_name: value.input_name,
         process_type: t(value.process_type),
@@ -52,6 +53,7 @@ const ExportExcel = (props ) => {
 
       const promises = nextLevel.map(async (data) => {
         let dba = JSON.parse(data.factor_db_basic)
+
         return getAllInputOutput_product_id(dba.id - 10000)
 
       });
@@ -64,11 +66,11 @@ const ExportExcel = (props ) => {
       })
 
       const v_cleaned = await Promise.all(v)
-      console.log('v_cleaned', v_cleaned)
+      
 
       excelData = array.map((value) => {
         return {
-          percentage: 1,
+
           footprint: value.footprint,
           input_name: value.input_name,
           process_type: t(value.process_type),
@@ -100,9 +102,9 @@ const ExportExcel = (props ) => {
         // console.log("total", total)
         for (let j=0; j < v_cleaned[i].length; j++) {
           // console.log("aa", v_cleaned[i][j])
-          let old = v_cleaned[i][j].footprint / total
-          v_cleaned[i][j].footprint = v_cleaned[i][j].footprint / total * footprint_total
-          v_cleaned[i][j].percentage = old
+          let footprint_Ratio =  (v_cleaned[i][j].footprint / total * 100).toFixed(2) + '%'
+          v_cleaned[i][j].footprint = v_cleaned[i][j].footprint / total * footprint_total 
+       
           v_cleaned[i][j].input_name = nextLevelData_data.input_name + "( " + v_cleaned[i][j].input_name + ")"
           excelData = excelData.concat(v_cleaned[i][j])
           // console.log("bb", v_cleaned[i][j])
@@ -182,6 +184,7 @@ const ExportExcel = (props ) => {
 
   const exportToExcel = async () => {
     
+
     // now do some cleaning
     excelData = await cleanData(excelData)
 

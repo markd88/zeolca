@@ -87,6 +87,12 @@ const App = (props) => {
       key: 'input_quantity',
     },
     {
+      title: t(`unit`),
+      dataIndex: 'input_unit',
+      width: 150,
+      key: 'input_unit',
+    },
+    {
       title: t(`input_data_source`),
       dataIndex: 'input_data_source',
       width: 150,
@@ -104,12 +110,7 @@ const App = (props) => {
       width: 150,
       key: 'input_stat_note',
     },
-    {
-      title: t(`unit`),
-      dataIndex: 'input_unit',
-      width: 150,
-      key: 'input_unit',
-    },
+
     {
       title: t(`factor_db_basic`),
       dataIndex: 'factor_db_basic',

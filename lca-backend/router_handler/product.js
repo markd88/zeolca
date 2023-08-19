@@ -856,9 +856,9 @@ exports.createNewInputOutput = async (req, res) => {
     const userid = req.auth.id
     const sql_process_type = `select * from process where id=?`
     const process_type_db_res = await db.query(sql_process_type, [input_info.process_id])
-    const process_type = process_type_db_res[0].process_type
+    let process_type = process_type_db_res[0].process_type
     console.log(process_type, "target")
-
+    process_type = Number(input_info.input) === 1 ? process_type: "process_output"
     const sql = `insert into input_output set ?`
     const data =  {
       process_id: input_info.process_id,

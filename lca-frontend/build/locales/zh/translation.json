@@ -134,6 +134,7 @@
   "process_sale": "分销",
   "process_use": "使用",
   "process_dispose": "废弃（使用结束）",
+  "process_output" : "排放输出",
 
   "process_material_short": "原料获取",
   "process_manu_short": "生产",
