@@ -10,12 +10,18 @@ import { useNavigate } from 'react-router-dom';
 const ExportExcel = (props ) => {
   let params = props;
   let excelData = params.excelData
+  
   let fileName = params.fileName
   const { t } = useTranslation();
   const fileType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
   const fileExtension = '.xlsx';
 
   const navigate = useNavigate()
+
+  let sum_total_footprint = 0;
+  for (let i=0; i< excelData.length; i++) {
+    sum_total_footprint = sum_total_footprint + excelData[i].footprint
+  }
 
 
   const cleanData = async (array) => {
@@ -102,7 +108,7 @@ const ExportExcel = (props ) => {
         // console.log("total", total)
         for (let j=0; j < v_cleaned[i].length; j++) {
           // console.log("aa", v_cleaned[i][j])
-          let footprint_Ratio =  (v_cleaned[i][j].footprint / total * 100).toFixed(2) + '%'
+          // v_cleaned[i][j].footprint_Ratio =  (v_cleaned[i][j].footprint / total * 100).toFixed(2) + '%'
           v_cleaned[i][j].footprint = v_cleaned[i][j].footprint / total * footprint_total 
        
           v_cleaned[i][j].input_name = nextLevelData_data.input_name + "( " + v_cleaned[i][j].input_name + ")"
@@ -185,8 +191,13 @@ const ExportExcel = (props ) => {
   const exportToExcel = async () => {
     
 
+    console.log(sum_total_footprint)
     // now do some cleaning
     excelData = await cleanData(excelData)
+
+    for (let i=0; i<excelData.length; i++) {
+      excelData[i].ratio = excelData[i].footprint / sum_total_footprint
+    }
 
     // product
     let product_info = [{
