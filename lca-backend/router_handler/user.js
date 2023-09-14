@@ -234,7 +234,25 @@ exports.regUser =  async (req, res) => {
 
   const sql_1 = `insert into users (username, password, email, company, createTime, recentTime ,verify) values (?,?,?,?,?,?,?)`
   // const createTime = time.format('YYYY-MM-DD HH:mm:ss')
-  const createTime = new Date().toLocaleString('en-US', { timeZone: 'Asia/Shanghai' }).slice(0, 19).replace('T', ' ');
+  // const createTime = new Date().toLocaleString('en-US', { timeZone: 'Asia/Shanghai' }).slice(0, 19).replace('T', ' ');
+   
+  function formatDateToBeijingTime() {
+    const date = new Date();
+    const options = {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+      hour12: false,
+      timeZone: 'Asia/Shanghai',
+    };
+  
+    return new Intl.DateTimeFormat('en-US', options).format(date);
+  }
+  
+  const createTime = formatDateToBeijingTime();
   const db_result = await db.query(sql_1, [userinfo.username, userinfo.password, userinfo.email, userinfo.company, createTime, createTime , 0 ])
   console.log(db_result)
   if (db_result.affectedRows != 1) {
@@ -318,10 +336,27 @@ exports.login = async (req, res) => {
       nonce: Math.random(),  // Include a random value as a nonce
     }
     const tokenStr = jwt.sign(user, config.env.jwtSecretKey, {
-      expiresIn: '1h', // token 有效期为 1 个小时
+      expiresIn: '5h', // token 有效期为 1 个小时
     })
     const login_time_update = `update users set recentTime=?, token=? where username=?`
-    const recentTime = new Date().toLocaleString('en-US', { timeZone: 'Asia/Shanghai' }).slice(0, 19).replace('T', ' ');
+    
+    function formatDateToBeijingTime() {
+      const date = new Date();
+      const options = {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: false,
+        timeZone: 'Asia/Shanghai',
+      };
+    
+      return new Intl.DateTimeFormat('en-US', options).format(date);
+    }
+    
+    const recentTime = formatDateToBeijingTime();
     const recentTime_results = await db.query(login_time_update, [recentTime, tokenStr, userinfo.username])
     // console.log(recentTime_results.affectedRows)
     if (recentTime_results.affectedRows !== 1) return res.send({status: 1, message: '后端数据库操作失败！'})

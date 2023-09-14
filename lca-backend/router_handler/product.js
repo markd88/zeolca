@@ -608,7 +608,27 @@ exports.createNewProduct = async (req, res) => {
     const userid = req.auth.id
     // console.log(p_info, userid)
     const sql = `insert into product set ?`
-    const createTime = new Date().toLocaleString('en-US', { timeZone: 'Asia/Shanghai' }).slice(0, 19).replace('T', ' ');
+
+    function formatDateToBeijingTime() {
+      const date = new Date();
+      const options = {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: false,
+        timeZone: 'Asia/Shanghai',
+      };
+    
+      return new Intl.DateTimeFormat('en-US', options).format(date);
+    }
+    
+    const createTime = formatDateToBeijingTime();
+
+    
+    console.log(createTime)
     // console.log(p_info.product_stats_range)
     const db_res = await db.query(sql, {
       uid: userid,
