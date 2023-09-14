@@ -608,7 +608,7 @@ exports.createNewProduct = async (req, res) => {
     const userid = req.auth.id
     // console.log(p_info, userid)
     const sql = `insert into product set ?`
-    const createTime = new Date().toISOString().slice(0, 19).replace('T', ' ');
+    const createTime = new Date().toLocaleString('en-US', { timeZone: 'Asia/Shanghai' }).slice(0, 19).replace('T', ' ');
     // console.log(p_info.product_stats_range)
     const db_res = await db.query(sql, {
       uid: userid,
